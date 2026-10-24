@@ -6,5 +6,5 @@
     "resolveJsonModule": true
   },
   "include": ["**/*.ts", "../shared/ui/src/**/*.ts", ".storybook/*.ts"],
-  "exclude": ["../shared/ui/src/**/*.spec.ts"]
+  "exclude": ["../shared/ui/src/**/*.spec.ts", "examples/architecture/**/*.spec.ts"]
 }

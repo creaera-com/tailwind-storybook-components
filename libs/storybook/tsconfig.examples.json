@@ -1,0 +1,8 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["vitest/globals", "node"]
+  },
+  "include": ["examples/architecture/**/*.ts", "../shared/ui/src/**/*.ts"],
+  "exclude": ["../shared/ui/src/**/*.spec.ts"]
+}

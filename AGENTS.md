@@ -112,3 +112,11 @@ Formulare sind für eine spätere Phase vorgesehen. Cards sind inzwischen freige
 - Ausklappbare Cards haben unten mittig einen Pfeil und sehen wie drei
   übereinander gestapelte Cards aus.
 - Card-Flächen sind weiß; die Border ist primär oder optional sekundär.
+
+## Architektur-Dokumentation
+
+- Unter Storybook/Architektur liegt der mehrseitige Leitfaden für konsumierende Anwendungen.
+- Referenzcode liegt in `libs/storybook/examples/architecture`, getrennt von der UI-Bibliothek.
+- Geänderte Codeblöcke mit `npm run docs:architecture:sync` aus den Quellen aktualisieren.
+- Synchronität mit `npm run docs:architecture:check` und Verhalten mit `npm run test:architecture` prüfen.
+- Beschriebene Zielstrukturen und API-Verträge nicht als bereits implementiertes Backend darstellen.
