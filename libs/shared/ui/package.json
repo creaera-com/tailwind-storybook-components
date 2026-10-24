@@ -1,0 +1,20 @@
+{
+  "name": "@creaera/ui",
+  "version": "0.1.0",
+  "peerDependencies": {
+    "@angular/core": "^22.0.0",
+    "@angular/common": "^22.0.0",
+    "@angular/forms": "^22.0.0"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    "./styles.css": {
+      "default": "./src/styles.css"
+    },
+    "./theme.css": {
+      "default": "./src/theme.css"
+    }
+  }
+}

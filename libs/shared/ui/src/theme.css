@@ -1,0 +1,76 @@
+/* Central design configuration. Change these tokens instead of component styles. */
+:root,
+.ui-light {
+  color-scheme: light;
+  --ui-background-primary: #f5faf7;
+  --ui-background-secondary: #ffffff;
+  --ui-background-tertiary: #69766f;
+  --ui-font-active: #ffffff;
+  --ui-font-default: #183c2a;
+  --ui-font-disabled: #e2e8e4;
+  --ui-interaction-primary: #146c43;
+  --ui-interaction-secondary: #355f4c;
+  --ui-interaction-disabled: #69776e;
+  --ui-interaction-hover: #105b38;
+  --ui-interaction-pressed-primary: #0b472b;
+  --ui-interaction-pressed-secondary: #244233;
+  --ui-interaction-divider: #cedbd2;
+  --ui-status-normal: #146c43;
+  --ui-status-caution: #875800;
+  --ui-status-dangerous: #b42335;
+}
+.ui-dark {
+  color-scheme: dark;
+  --ui-background-primary: #101d16;
+  --ui-background-secondary: #1a2c21;
+  --ui-background-tertiary: #59675e;
+  --ui-font-active: #ffffff;
+  --ui-font-default: #e2f0e6;
+  --ui-font-disabled: #b2bdb5;
+  --ui-interaction-primary: #237a4f;
+  --ui-interaction-secondary: #416c55;
+  --ui-interaction-disabled: #49584e;
+  --ui-interaction-hover: #1b6942;
+  --ui-interaction-pressed-primary: #145534;
+  --ui-interaction-pressed-secondary: #2f503d;
+  --ui-interaction-divider: #3b5142;
+  --ui-status-normal: #79dba1;
+  --ui-status-caution: #f0c66a;
+  --ui-status-dangerous: #ff9aa5;
+}
+/* Small screens by default, large screens from 48rem. Classes override auto. */
+:root {
+  --ui-padding: 0.75rem;
+  --ui-margin: 0.75rem;
+  --ui-button-height: 2.75rem;
+  --ui-button-padding: 1rem;
+  --ui-font-size: 0.875rem;
+  --ui-control-size: 1.25rem;
+  --ui-radius: 0.625rem;
+}
+@media (min-width: 48rem) {
+  :root {
+    --ui-padding: 1rem;
+    --ui-margin: 1rem;
+    --ui-button-height: 3rem;
+    --ui-button-padding: 1.25rem;
+    --ui-font-size: 1rem;
+    --ui-control-size: 1.375rem;
+  }
+}
+.ui-small {
+  --ui-padding: 0.75rem;
+  --ui-margin: 0.75rem;
+  --ui-button-height: 2.75rem;
+  --ui-button-padding: 1rem;
+  --ui-font-size: 0.875rem;
+  --ui-control-size: 1.25rem;
+}
+.ui-large {
+  --ui-padding: 1rem;
+  --ui-margin: 1rem;
+  --ui-button-height: 3rem;
+  --ui-button-padding: 1.25rem;
+  --ui-font-size: 1rem;
+  --ui-control-size: 1.375rem;
+}

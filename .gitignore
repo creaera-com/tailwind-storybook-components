@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.nx/
+.angular/
+coverage/
+*.log
+
+test-results/
+playwright-report/

@@ -1,0 +1,39 @@
+{
+  "name": "storybook",
+  "projectType": "application",
+  "sourceRoot": "libs/storybook",
+  "targets": {
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "configDir": "libs/storybook/.storybook",
+        "browserTarget": "storybook:build",
+        "port": 6006,
+        "host": "0.0.0.0",
+        "ci": true,
+        "compodocArgs": ["-e", "json", "-d", "dist/compodoc", "--silent"]
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{workspaceRoot}/dist/storybook"],
+      "options": {
+        "configDir": "libs/storybook/.storybook",
+        "browserTarget": "storybook:build",
+        "outputDir": "dist/storybook",
+        "compodocArgs": ["-e", "json", "-d", "dist/compodoc", "--silent"]
+      }
+    },
+    "build": {
+      "executor": "@angular/build:application",
+      "options": {
+        "browser": "libs/storybook/main.ts",
+        "tsConfig": "libs/storybook/tsconfig.json",
+        "styles": ["libs/shared/ui/src/styles.css"],
+        "outputPath": "dist/storybook-host",
+        "index": "libs/storybook/index.html"
+      },
+      "outputs": ["{workspaceRoot}/dist/storybook-host"]
+    }
+  }
+}

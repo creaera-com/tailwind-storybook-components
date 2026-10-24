@@ -1,0 +1,240 @@
+@import 'tailwindcss';
+@import './theme.css';
+@source './lib';
+@source '../../../storybook';
+
+@theme inline {
+  --color-ui-background: var(--ui-background-primary);
+  --color-ui-surface: var(--ui-background-secondary);
+  --color-ui-primary: var(--ui-interaction-primary);
+  --color-ui-secondary: var(--ui-interaction-secondary);
+  --color-ui-text: var(--ui-font-default);
+  --color-ui-divider: var(--ui-interaction-divider);
+  --color-ui-normal: var(--ui-status-normal);
+  --color-ui-caution: var(--ui-status-caution);
+  --color-ui-dangerous: var(--ui-status-dangerous);
+  --spacing-ui-padding: var(--ui-padding);
+  --spacing-ui-margin: var(--ui-margin);
+}
+
+@layer components {
+  .ui-button,
+  .ui-chip {
+    --ui-button-bg: var(--ui-interaction-primary);
+    --ui-button-pressed: var(--ui-interaction-pressed-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: var(--ui-button-height);
+    min-width: var(--ui-button-height);
+    padding: 0.375rem var(--ui-button-padding);
+    border: 2px solid transparent;
+    border-radius: var(--ui-radius);
+    background: var(--ui-button-bg);
+    color: var(--ui-font-active);
+    font: inherit;
+    font-size: var(--ui-font-size);
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+    transition:
+      background-color 120ms,
+      box-shadow 120ms;
+  }
+  .ui-button[data-variant='secondary'] {
+    --ui-button-bg: var(--ui-interaction-secondary);
+    --ui-button-pressed: var(--ui-interaction-pressed-secondary);
+  }
+  .ui-button[data-variant='tertiary'] {
+    --ui-button-bg: var(--ui-background-tertiary);
+    border-color: var(--ui-interaction-primary);
+  }
+  .ui-button[data-variant='text'] {
+    --ui-button-bg: transparent;
+    color: var(--ui-font-default);
+  }
+  .ui-button:hover:not(:disabled),
+  .ui-chip:hover:not(:disabled) {
+    border-color: white;
+    background: var(--ui-interaction-hover);
+    color: white;
+  }
+  .ui-button:active:not(:disabled),
+  .ui-chip:active:not(:disabled) {
+    border-color: white;
+    box-shadow: inset 0 0 0 2px white;
+    background: var(--ui-button-pressed);
+    color: white;
+  }
+  .ui-button[data-variant='text']:hover:not(:disabled),
+  .ui-button[data-variant='text']:active:not(:disabled) {
+    background: transparent;
+    color: var(--ui-font-default);
+  }
+  .ui-button:focus-visible,
+  .ui-chip:focus-visible {
+    outline: 3px double white;
+    outline-offset: 3px;
+    /* Green backing keeps the white focus indicator visible in Light Mode. */
+    box-shadow: 0 0 0 7px var(--ui-interaction-primary);
+    border-color: white;
+  }
+  .ui-button:focus-visible:active:not(:disabled),
+  .ui-chip:focus-visible:active:not(:disabled) {
+    box-shadow:
+      inset 0 0 0 2px white,
+      0 0 0 7px var(--ui-interaction-primary);
+  }
+  .ui-button:disabled,
+  .ui-chip:disabled {
+    background: var(--ui-interaction-disabled);
+    color: var(--ui-font-disabled);
+    border-color: white;
+    cursor: not-allowed;
+  }
+  .ui-button[data-variant='text']:disabled {
+    background: transparent;
+    color: var(--ui-interaction-disabled);
+  }
+  .ui-icon,
+  [uiIcon] {
+    display: inline-block;
+    width: 1.25em;
+    height: 1.25em;
+    flex: none;
+    color: white;
+  }
+  .ui-choice {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--ui-font-default);
+    font-size: var(--ui-font-size);
+    cursor: pointer;
+    min-height: var(--ui-button-height);
+  }
+  .ui-checkbox,
+  .ui-radio {
+    width: var(--ui-control-size);
+    height: var(--ui-control-size);
+    accent-color: var(--ui-interaction-primary);
+    cursor: pointer;
+  }
+  .ui-switch {
+    appearance: none;
+    width: 2.75rem;
+    height: 1.5rem;
+    border: 2px solid var(--ui-interaction-divider);
+    border-radius: 999px;
+    background: var(--ui-background-tertiary);
+    cursor: pointer;
+    position: relative;
+  }
+  .ui-switch::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: white;
+    transition: transform 120ms;
+  }
+  .ui-switch:checked {
+    background: var(--ui-interaction-primary);
+    border-color: var(--ui-interaction-primary);
+  }
+  .ui-switch:checked::before {
+    transform: translateX(1.25rem);
+  }
+  .ui-switch:disabled,
+  .ui-checkbox:disabled,
+  .ui-radio:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .ui-switch:focus-visible,
+  .ui-checkbox:focus-visible,
+  .ui-radio:focus-visible {
+    outline: 2px solid var(--ui-interaction-primary);
+    outline-offset: 3px;
+  }
+  .ui-choice:has(input:disabled) {
+    cursor: not-allowed;
+    color: var(--ui-interaction-disabled);
+  }
+  .ui-button-group,
+  .ui-split-button {
+    display: inline-flex;
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid white;
+    border-radius: var(--ui-radius);
+    background: var(--ui-background-tertiary);
+  }
+  .ui-button-group .ui-button {
+    background: var(--ui-background-tertiary);
+  }
+  .ui-button-group .ui-button[data-selected='true'] {
+    background: var(--ui-interaction-primary);
+    box-shadow: inset 0 -3px white;
+  }
+  .ui-button-group .ui-button:disabled {
+    background: var(--ui-interaction-disabled);
+  }
+  .ui-chip {
+    border-radius: 999px;
+    min-height: 2rem;
+    padding: 0.25rem 0.875rem;
+  }
+  .ui-menu-anchor {
+    position: relative;
+    display: inline-block;
+  }
+  .ui-menu {
+    position: absolute;
+    inset-inline-start: 0;
+    top: calc(100% + 0.5rem);
+    z-index: 20;
+    min-width: max(100%, 12rem);
+    max-width: min(24rem, 90vw);
+    max-height: 18rem;
+    overflow-y: auto;
+    padding: 0.375rem;
+    border: 1px solid var(--ui-interaction-divider);
+    border-radius: var(--ui-radius);
+    background: var(--ui-background-secondary);
+    color: var(--ui-font-default);
+    box-shadow: 0 8px 24px #0003;
+  }
+  .ui-menu [role='menuitem'] {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 0.375rem;
+    padding: var(--ui-padding);
+    text-align: start;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+  .ui-menu [role='menuitem']:hover:not(:disabled),
+  .ui-menu [role='menuitem']:focus-visible {
+    background: var(--ui-interaction-primary);
+    color: white;
+    outline: none;
+  }
+  .ui-menu [role='menuitem']:disabled {
+    color: var(--ui-interaction-disabled);
+    cursor: not-allowed;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ui-button,
+    .ui-chip,
+    .ui-switch::before {
+      transition: none;
+    }
+  }
+}

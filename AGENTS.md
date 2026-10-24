@@ -31,12 +31,12 @@ dürfen bei der Umsetzung sinnvoll angenommen werden.
 
 ### Farbrollen
 
-| Bereich | Rollen |
-| --- | --- |
-| Background | primary, secondary, tertiary |
-| Fonts | active, default, disabled |
+| Bereich      | Rollen                                                                           |
+| ------------ | -------------------------------------------------------------------------------- |
+| Background   | primary, secondary, tertiary                                                     |
+| Fonts        | active, default, disabled                                                        |
 | Interactions | primary, secondary, disabled, hover, pressed-primary, pressed-secondary, divider |
-| Status | normal, caution, dangerous |
+| Status       | normal, caution, dangerous                                                       |
 
 Die Schreibweisen sind gegenüber der ursprünglichen Aufnahme vereinheitlicht.
 
@@ -55,12 +55,12 @@ Die Schreibweisen sind gegenüber der ursprünglichen Aufnahme vereinheitlicht.
 
 ### Buttons
 
-| Variante | Default | Weitere Zustände |
-| --- | --- | --- |
-| Primärbutton | Primärer Standardhintergrund | Hover: weiße Border. Pressed: dicke weiße Border. Disabled: weiße Border und Disabled-Farbe. Focused: doppelte weiße Border bei primärem Standardhintergrund. |
-| Sekundärbutton | Sekundärer Standardhintergrund | Dasselbe Zustandsverhalten mit der Sekundärfarbe. |
-| Tertiärbutton | Grauer Hintergrund und Border in Primärfarbe | Ansonsten dasselbe Zustandsverhalten. |
-| Textbutton | Ohne Hintergrundfarbe | Das bekannte Zustandsverhalten; genaue Ausgestaltung noch offen. |
+| Variante       | Default                                      | Weitere Zustände                                                                                                                                              |
+| -------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primärbutton   | Primärer Standardhintergrund                 | Hover: weiße Border. Pressed: dicke weiße Border. Disabled: weiße Border und Disabled-Farbe. Focused: doppelte weiße Border bei primärem Standardhintergrund. |
+| Sekundärbutton | Sekundärer Standardhintergrund               | Dasselbe Zustandsverhalten mit der Sekundärfarbe.                                                                                                             |
+| Tertiärbutton  | Grauer Hintergrund und Border in Primärfarbe | Ansonsten dasselbe Zustandsverhalten.                                                                                                                         |
+| Textbutton     | Ohne Hintergrundfarbe                        | Das bekannte Zustandsverhalten; genaue Ausgestaltung noch offen.                                                                                              |
 
 - Buttons unterstützen Icon links und Text rechts oder ausschließlich ein Icon.
 - Iconfarbe: weiß.
@@ -68,27 +68,32 @@ Die Schreibweisen sind gegenüber der ursprünglichen Aufnahme vereinheitlicht.
 
 ### Weitere Komponenten
 
-| Komponente | Anforderungen |
-| --- | --- |
-| Toggle Switch | Zustände active, inactive und disabled. |
-| Button Group | Weiße Außenborder. Eine Variante mit Einfachauswahl, eine mit Mehrfachauswahl. |
-| Radio Button | Zustände active, selected und disabled. |
-| Checkbox | Zustände active, selected und disabled. |
-| Chip | Zustände default, hover, pressed, disabled und focused. |
-| Option Button | Button mit danebenliegendem Pfeil zum Aufklappen einer Optionsliste. |
+| Komponente    | Anforderungen                                                                             |
+| ------------- | ----------------------------------------------------------------------------------------- |
+| Toggle Switch | Zustände active, inactive und disabled.                                                   |
+| Button Group  | Weiße Außenborder. Eine Variante mit Einfachauswahl, eine mit Mehrfachauswahl.            |
+| Radio Button  | Zustände active, selected und disabled.                                                   |
+| Checkbox      | Zustände active, selected und disabled.                                                   |
+| Chip          | Zustände default, hover, pressed, disabled und focused.                                   |
+| Option Button | Button mit danebenliegendem Pfeil zum Aufklappen einer Optionsliste.                      |
 | Dropdown-Menü | Eigenständige gewünschte Komponente; Varianten, Zustände und Auswahlverhalten noch offen. |
 
 Alle Komponenten berücksichtigen die zentralen Themes und Größenprofile.
 
-## Offene Details
+## Umsetzungsannahmen bis zum Nutzerfeedback
 
-- Bedeutung von active gegenüber selected bei Radio Buttons und Checkboxen.
-- Konkrete Gestaltung und Zustände der Textbuttons.
-- Verhalten und Gestaltung der Optionslisten und des Dropdown-Menüs.
-- Genaue Storybook-Verzeichnisstruktur unter `./libs`.
-- Farbwerte, Größen, Breakpoints und konkrete Konfigurationsstruktur.
+- „Active“ bei Checkbox und Radio bedeutet bedienbar und nicht ausgewählt.
+- Textbuttons bleiben in allen Zuständen transparent.
+- Dropdown und Optionslisten sind zunächst Aktionsmenüs, keine Formular-Selects.
+- Storybook liegt unter `./libs/storybook`.
+- CSS-Variablen in `libs/shared/ui/src/theme.css` bilden die zentrale Konfiguration.
+- Der automatische Größenwechsel erfolgt ab 48rem; `ui-small` und `ui-large`
+  überschreiben ihn. `ui-light` und `ui-dark` steuern das Theme.
+- Die konkreten Grün-, Grau- und Statusfarben sowie Größen sind erste Annahmen
+  und können nach Nutzerfeedback zentral angepasst werden.
 
-Offene Punkte nicht als bereits abgestimmte Anforderungen darstellen.
+Diese Entscheidungen nicht als ausdrücklich vom Nutzer vorgegebene Details
+bezeichnen. Die minimale öffentliche API ist in README.md dokumentiert.
 
 ## Spätere Erweiterungen
 
