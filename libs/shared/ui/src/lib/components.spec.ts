@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   Button,
   ButtonGroup,
+  Card,
   Checkbox,
   Chip,
   Dropdown,
@@ -24,7 +25,7 @@ class ButtonHost {
 }
 @Component({
   imports: [Button, Chip],
-  template: '<button uiButton type="submit">Save</button><button uiChip>Tag</button>',
+  template: '<button uiButton type="submit">Save</button><ui-chip>Tag</ui-chip>',
 })
 class NativeActionsHost {}
 @Component({
@@ -55,6 +56,33 @@ class ModelHost {
 })
 class RadioHost {
   control = new FormControl('standard');
+}
+
+@Component({
+  imports: [Card, Checkbox],
+  template: `<ui-card collapsible label="Outer" [(expanded)]="outerOpen">
+    <h2 uiCardHeader>Outer heading</h2>
+    <ui-card collapsible label="Inner" [(expanded)]="innerOpen">
+      <h3 uiCardHeader>Inner heading</h3>
+      <ui-checkbox [(checked)]="checked">Keep state</ui-checkbox>
+    </ui-card>
+  </ui-card>`,
+})
+class NestedCardHost {
+  outerOpen = true;
+  innerOpen = true;
+  checked = false;
+}
+@Component({
+  imports: [Chip],
+  template: `<div (click)="parentClicks = parentClicks + 1">
+    <ui-chip [disabled]="disabled" (removed)="removals = removals + 1">Angular</ui-chip>
+  </div>`,
+})
+class ChipHost {
+  disabled = false;
+  removals = 0;
+  parentClicks = 0;
 }
 
 const options = [
@@ -89,7 +117,7 @@ describe('native actions', () => {
   it('keeps chips as non-submitting native actions', () => {
     const fixture = TestBed.createComponent(NativeActionsHost);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('[uiChip]').type).toBe('button');
+    expect(fixture.nativeElement.querySelector('ui-chip button').type).toBe('button');
   });
 });
 
@@ -282,5 +310,88 @@ describe('menus', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('[role="menu"]')).not.toBeNull();
     expect(action).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('removable chips', () => {
+  it('has one native non-submitting close button named by its visible label', () => {
+    const fixture = TestBed.createComponent(ChipHost);
+    fixture.detectChanges();
+    const chip = fixture.nativeElement.querySelector('ui-chip') as HTMLElement;
+    const button = chip.querySelector('button')!;
+    expect(button.type).toBe('button');
+    expect(chip.querySelectorAll('button')).toHaveLength(1);
+    const labelIds = button.getAttribute('aria-labelledby')!.split(' ');
+    expect(
+      labelIds
+        .map((id) => fixture.nativeElement.querySelector(`[id="${id}"]`).textContent)
+        .join(' '),
+    ).toContain('Entfernen: Angular');
+    button.click();
+    expect(fixture.componentInstance.removals).toBe(1);
+    expect(fixture.componentInstance.parentClicks).toBe(0);
+  });
+  it('does not remove a disabled chip', () => {
+    const fixture = TestBed.createComponent(ChipHost);
+    fixture.componentInstance.disabled = true;
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button.disabled).toBe(true);
+    button.click();
+    expect(fixture.componentInstance.removals).toBe(0);
+  });
+});
+
+describe('cards', () => {
+  it('shows a normal card without a toggle and accepts the secondary border', () => {
+    const fixture = TestBed.createComponent(Card);
+    fixture.componentRef.setInput('border', 'secondary');
+    fixture.detectChanges();
+    expect(fixture.nativeElement.getAttribute('data-border')).toBe('secondary');
+    expect(fixture.nativeElement.querySelector('button')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.ui-card-content').hidden).toBe(false);
+  });
+  it('keeps the heading visible and toggles the controlled content', () => {
+    const fixture = TestBed.createComponent(NestedCardHost);
+    fixture.componentInstance.outerOpen = false;
+    fixture.detectChanges();
+    const outer = fixture.nativeElement.querySelector('ui-card');
+    const toggle = outer.querySelector(':scope > .ui-card-surface > .ui-card-footer > button');
+    const content = outer.querySelector('.ui-card-content');
+    expect(content.hidden).toBe(true);
+    expect(outer.querySelector('h2').textContent).toBe('Outer heading');
+    expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    expect(toggle.getAttribute('aria-controls')).toBe(content.id);
+    toggle.click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.outerOpen).toBe(true);
+    expect(content.hidden).toBe(false);
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+  });
+  it('nests independent cards and preserves the inner state while the outer card is closed', () => {
+    const fixture = TestBed.createComponent(NestedCardHost);
+    fixture.detectChanges();
+    const cards = fixture.nativeElement.querySelectorAll('ui-card');
+    const innerToggle = cards[1].querySelector('.ui-card-footer > button');
+    const outerToggle = cards[0].querySelector(
+      ':scope > .ui-card-surface > .ui-card-footer > button',
+    );
+    const checkbox = fixture.nativeElement.querySelector('input');
+    checkbox.click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.checked).toBe(true);
+    innerToggle.click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.innerOpen).toBe(false);
+    expect(fixture.componentInstance.outerOpen).toBe(true);
+    outerToggle.click();
+    fixture.detectChanges();
+    outerToggle.click();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.innerOpen).toBe(false);
+    expect(fixture.componentInstance.checked).toBe(true);
+    expect(cards[0].querySelector('.ui-card-content').id).not.toBe(
+      cards[1].querySelector('.ui-card-content').id,
+    );
   });
 });

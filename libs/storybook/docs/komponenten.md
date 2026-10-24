@@ -171,16 +171,78 @@ Die Gruppe unterstützt kein `formControl`-/`ngModel`-Binding; sie verwendet
 
 ## Chips
 
-`Chip` importieren:
+`Chip` importieren. Ein Chip enthält einen kleinen X-Button mit dem
+zugänglichen Namen „Entfernen: …“, ergänzt um seinen sichtbaren Text:
 
 ```html
-<button uiChip (click)="openTopic()">Designsystem</button>
-<button uiChip disabled>Nicht verfügbar</button>
+@if (showTag) {
+<ui-chip (removed)="showTag = false">Designsystem</ui-chip>
+}
+<ui-chip disabled>Nicht verfügbar</ui-chip>
 ```
 
-Ein Chip ist zunächst eine Aktion, kein ausgewählter Filter und kein entfernbares
-Tag. Er unterstützt Default, Hover, Pressed, Disabled und Tastaturfokus über
-native Button-Semantik. Der Button-Typ ist immer `button`.
+`removed` meldet den Entfernungswunsch. Die Anwendung entfernt den Eintrag aus
+ihrer Liste; der Chip verändert die Daten nicht selbst. Der X-Button funktioniert
+mit Maus, Enter und Leertaste und sendet bei Disabled kein Event. Er löst auch
+keine Klickaktion eines umgebenden Containers aus.
+
+Die bisherige Schreibweise `<button uiChip>` wird durch `<ui-chip>` ersetzt,
+damit keine Buttons ineinander liegen. Der Chip ist kein ausgewählter Filter.
+Default, Hover, Pressed, Disabled und Fokus werden über CSS dargestellt.
+
+## Cards
+
+`Card` importieren. Eine normale Card zeigt ihren Inhalt immer an:
+
+```html
+<ui-card>
+  <h2 uiCardHeader>Projektdetails</h2>
+  <p>Zusammengehörige Informationen.</p>
+</ui-card>
+```
+
+Mit `uiCardHeader` wird der persistente Kopf markiert. Alle anderen Inhalte
+liegen im Inhaltsbereich. Das Attribut benötigt keinen eigenen Angular-Import.
+Die Anwendung wählt eine zur Überschriftenhierarchie passende Ebene (h2, h3 usw.).
+
+### Ausklappbare Variante
+
+```html
+<ui-card collapsible label="Projektdetails" [(expanded)]="detailsOpen">
+  <h2 uiCardHeader>Projektdetails</h2>
+  <p>Zusätzliche Informationen im ausklappbaren Inhaltsbereich.</p>
+</ui-card>
+```
+
+`detailsOpen` ist ein Boolean. Standardmäßig ist eine ausklappbare Card geschlossen.
+Der Header bleibt sichtbar; der Pfeil unten mittig öffnet/schließt den Inhalt.
+Enter und Leertaste funktionieren wie bei einem nativen Button. `label` benennt
+die Card für den zugänglichen Toggle-Text; der Standardwert ist „Card“.
+
+Zwei zusätzliche, rein dekorative Ebenen erzeugen die Optik von drei gestapelten
+Cards. Sie erscheinen nur bei der ausklappbaren Variante. Die Pfeilrichtung und
+`aria-expanded` folgen dem Zustand. Der Inhalt wird ausgeblendet, nicht zerstört;
+Zustände von Kindkomponenten bleiben beim Einklappen erhalten.
+
+### Sekundärborder und Verschachtelung
+
+```html
+<ui-card>
+  <h2 uiCardHeader>Projektübersicht</h2>
+  <ui-card collapsible border="secondary" label="Weitere Details">
+    <h3 uiCardHeader>Weitere Details</h3>
+    <p>Diese Card lässt sich unabhängig öffnen.</p>
+  </ui-card>
+</ui-card>
+```
+
+`border="primary"` ist der Standard. `border="secondary"` verwendet die graue
+Sekundärfarbe. Cards können auch innerhalb ausklappbarer Cards liegen. Jede Card
+hat ihren eigenen Zustand und eine eigene ID für den kontrollierten Bereich.
+
+Die Flächen bleiben auch im Dark Mode weiß, mit dunklem Text. Die zentralen
+Tokens heißen `--ui-card-background` und `--ui-card-text`. Padding und Abstände
+folgen `--ui-padding` und `--ui-margin`; die Rundung folgt `--ui-radius`.
 
 ## Dropdown-Menü
 

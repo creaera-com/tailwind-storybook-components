@@ -16,7 +16,7 @@ test('all published stories render without Angular or browser errors', async ({
     await expect(
       page
         .locator(
-          '#storybook-root .ui-button, #storybook-root .ui-choice, #storybook-root .ui-radio, #storybook-root .ui-chip',
+          '#storybook-root .ui-button, #storybook-root .ui-choice, #storybook-root .ui-radio, #storybook-root .ui-chip, #storybook-root .ui-card',
         )
         .first(),
     ).toBeVisible();
@@ -154,4 +154,73 @@ test('user documentation renders all guides, code examples and the shared README
     }
   }
   expect(errors).toEqual([]);
+});
+
+test('chips remove by keyboard and disabled chips remain inert', async ({ page }) => {
+  await page.goto('/iframe.html?id=components-chip--default&viewMode=story');
+  const close = page.getByRole('button', { name: 'Entfernen: Designsystem' });
+  await close.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByText('Chip entfernt.')).toBeVisible();
+  await expect(page.locator('ui-chip')).toHaveCount(0);
+  await page.goto('/iframe.html?id=components-chip--disabled&viewMode=story');
+  await expect(page.getByRole('button', { name: 'Entfernen: Designsystem' })).toBeDisabled();
+});
+
+test('cards toggle by keyboard, nest independently and keep their white surface', async ({
+  page,
+}) => {
+  await page.goto('/iframe.html?id=components-card--collapsible&viewMode=story');
+  const card = page.locator('ui-card');
+  const toggle = card.locator('.ui-card-toggle');
+  await expect(toggle).toHaveAccessibleName('Projektdetails ausklappen');
+  await expect(card.locator('.ui-card-content')).toBeHidden();
+  await toggle.focus();
+  await page.keyboard.press('Space');
+  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await expect(card.locator('.ui-card-content')).toBeVisible();
+  await expect(card.locator('.ui-card-surface')).toHaveCSS(
+    'background-color',
+    'rgb(255, 255, 255)',
+  );
+  const layers = await card.evaluate((el) =>
+    ['::before', '::after'].map((p) => getComputedStyle(el, p).content),
+  );
+  expect(layers).toEqual(['""', '""']);
+  await page.evaluate(() => {
+    document.body.classList.remove('ui-light');
+    document.body.classList.add('ui-dark');
+  });
+  await expect(card.locator('.ui-card-surface')).toHaveCSS(
+    'background-color',
+    'rgb(255, 255, 255)',
+  );
+  await expect(card.getByText('Benachrichtigungen erhalten')).toHaveCSS('color', 'rgb(24, 60, 42)');
+  await page.goto('/iframe.html?id=components-card--nested&viewMode=story');
+  await page.getByRole('button', { name: 'Weitere Details ausklappen' }).click();
+  await expect(page.getByRole('button', { name: 'Projektübersicht einklappen' })).toHaveAttribute(
+    'aria-expanded',
+    'true',
+  );
+  await expect(page.getByRole('button', { name: 'Bearbeiten' })).toBeVisible();
+  await page.getByRole('button', { name: 'Projektübersicht einklappen' }).click();
+  await expect(page.getByRole('button', { name: 'Bearbeiten' })).toBeHidden();
+  await page.getByRole('button', { name: 'Projektübersicht ausklappen' }).click();
+  await expect(page.getByRole('button', { name: 'Bearbeiten' })).toBeVisible();
+});
+
+test('secondary buttons and card borders use neutral gray tokens', async ({ page }) => {
+  await page.goto('/iframe.html?id=components-button--secondary&viewMode=story');
+  await expect(page.getByRole('button', { name: 'Weiter' })).toHaveCSS(
+    'background-color',
+    'rgb(82, 82, 91)',
+  );
+  const secondary = page.getByRole('button', { name: 'Weiter' });
+  await secondary.hover();
+  await expect(secondary).toHaveCSS('background-color', 'rgb(70, 70, 79)');
+  await page.mouse.down();
+  await expect(secondary).toHaveCSS('background-color', 'rgb(63, 63, 70)');
+  await page.mouse.up();
+  await page.goto('/iframe.html?id=components-card--secondary&viewMode=story');
+  await expect(page.locator('.ui-card-surface')).toHaveCSS('border-top-color', 'rgb(82, 82, 91)');
 });
