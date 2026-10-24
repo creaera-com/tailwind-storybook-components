@@ -42,6 +42,7 @@ const preview: Preview = {
           [
             'Start',
             'Module und Nx',
+            'Komponenten anlegen und CLI',
             'Komponenten und APIs',
             'State und Signal Store',
             'HTTP und CRUD',

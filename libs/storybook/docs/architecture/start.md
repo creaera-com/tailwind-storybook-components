@@ -36,11 +36,12 @@ ruft `store.publish(project, requestId)` auf. Der API-Client sendet den Befehl.
 Nach bestätigtem Erfolg lädt der Store die aktuelle Liste neu. Der Server prüft,
 ob das Projekt veröffentlicht werden darf.
 
-## Die acht Kapitel
+## Die neun Kapitel
 
 | Kapitel                      | Entscheidung, die es erklärt                                           |
 | ---------------------------- | ---------------------------------------------------------------------- |
 | Start                        | Gesamtbild, Umfang und Quellen                                         |
+| Komponenten anlegen und CLI  | Generatoren, Library-Export, Stories und wichtige Befehle              |
 | Module und Nx                | Fachliche Grenzen, Libraries, Imports und Lazy Loading                 |
 | Komponenten und APIs         | Container, fachliche UI, wiederverwendbare Controls und Formulare      |
 | State und Signal Store       | Zustandsbesitz, Lebensdauer, Entities, Methoden und abgeleitete Werte  |

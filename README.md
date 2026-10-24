@@ -180,7 +180,7 @@ Card-Fläche und deren dunklen Text zentral.
 
 ## Architekturleitfaden
 
-Storybook enthält unter **Architektur** acht Kapitel zu modularen Angular-/Nx-
+Storybook enthält unter **Architektur** neun Kapitel zu modularen Angular-/Nx-
 Anwendungen, Komponentengrenzen, State-Besitz, NgRx Signal Store, CRUD- und
 Aktions-APIs, Server-Suche und Tests. Ein zusammenhängendes Projektverwaltungs-
 Beispiel veranschaulicht die Entscheidungen.

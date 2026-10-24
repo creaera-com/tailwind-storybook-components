@@ -225,7 +225,7 @@ test('secondary buttons and card borders use neutral gray tokens', async ({ page
   await expect(page.locator('.ui-card-surface')).toHaveCSS('border-top-color', 'rgb(82, 82, 91)');
 });
 
-test('architecture guide renders its eight chapters with compiled source examples', async ({
+test('architecture guide renders its nine chapters with compiled source examples', async ({
   page,
   request,
 }) => {
@@ -235,6 +235,11 @@ test('architecture guide renders its eight chapters with compiled source example
   const chapters = [
     ['Architektur/Start', 'Moderne Angular-Architektur', '22.0.1'],
     ['Architektur/Module und Nx', 'Module und Nx', 'loadComponent'],
+    [
+      'Architektur/Komponenten anlegen und CLI',
+      'Komponenten anlegen und wichtige CLI-Befehle',
+      '--dry-run',
+    ],
     ['Architektur/Komponenten und APIs', 'Komponenten und ihre APIs', 'publishRequested'],
     ['Architektur/State und Signal Store', 'State und NgRx Signal Store', 'setAllEntities'],
     ['Architektur/HTTP und CRUD', 'HTTP und CRUD-APIs', 'Idempotency-Key'],
