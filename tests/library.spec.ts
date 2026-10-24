@@ -111,3 +111,47 @@ test('Storybook toolbar switches the preview theme and size', async ({ page }) =
   await page.getByText('small', { exact: true }).click();
   await expect(preview.locator('body')).toHaveClass(/ui-small/);
 });
+
+test('user documentation renders all guides, code examples and the shared README', async ({
+  page,
+  request,
+}) => {
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  const index = await (await request.get('/index.json')).json();
+  const guides = [
+    ['Anwenderdoku/Start', 'Creaera UI verwenden', 'npm ci'],
+    [
+      'Anwenderdoku/Farben konfigurieren',
+      'Farben zentral konfigurieren',
+      '--ui-interaction-primary',
+    ],
+    ['Anwenderdoku/Light und Dark Mode', 'Light und Dark Mode', "setTheme('dark')"],
+    ['Anwenderdoku/Responsive Größen', 'Responsive Größen', '--ui-button-height'],
+    ['Anwenderdoku/Komponenten verwenden', 'Komponenten verwenden', 'ReactiveFormsModule'],
+    ['Anwenderdoku/API und Projektaufbau', 'Creaera UI', 'Kleine öffentliche API'],
+  ];
+  for (const [title, heading, example] of guides) {
+    const entry = Object.values(index.entries).find(
+      (entry: any) => entry.type === 'docs' && entry.title === title,
+    ) as { id: string } | undefined;
+    expect(entry, `${title} must appear in Storybook navigation`).toBeDefined();
+    await page.goto(`/?path=/docs/${entry!.id}`);
+    const preview = page.frameLocator('#storybook-preview-iframe');
+    await expect(preview.getByRole('heading', { name: heading })).toBeVisible();
+    await expect(preview.locator('.sbdocs-content')).toContainText(example);
+    await expect(preview.locator('.sbdocs-content pre').first()).toBeVisible();
+    await expect(preview.locator('.sb-errordisplay')).not.toBeVisible();
+    if (title.endsWith('Farben konfigurieren')) {
+      await expect(preview.getByRole('table').first()).toContainText('--ui-status-dangerous');
+    }
+    if (title.endsWith('Responsive Größen')) {
+      await expect(preview.getByRole('table').nth(1)).toContainText('--ui-control-size');
+    }
+    if (title.endsWith('API und Projektaufbau')) {
+      await expect(preview.locator('.sbdocs-content')).toContainText('OptionButton');
+      await expect(preview.locator('.sbdocs-content')).toContainText('Bedienung und Annahmen');
+    }
+  }
+  expect(errors).toEqual([]);
+});

@@ -23,6 +23,26 @@ const preview: Preview = {
       return story();
     },
   ],
-  parameters: { layout: 'padded', controls: { expanded: true } },
+  parameters: {
+    layout: 'padded',
+    controls: { expanded: true },
+    options: {
+      storySort: {
+        order: [
+          'Anwenderdoku',
+          [
+            'Start',
+            'Farben konfigurieren',
+            'Light und Dark Mode',
+            'Responsive Größen',
+            'Komponenten verwenden',
+            'API und Projektaufbau',
+          ],
+          'Foundations',
+          'Components',
+        ],
+      },
+    },
+  },
 };
 export default preview;
