@@ -36,6 +36,7 @@ const preview: Preview = {
             'Light und Dark Mode',
             'Responsive Größen',
             'Komponenten verwenden',
+            'Formularfelder',
             'API und Projektaufbau',
           ],
           'Foundations',

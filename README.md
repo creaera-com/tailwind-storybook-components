@@ -126,7 +126,7 @@ Buttons benötigen ein `aria-label`; dekorative Icons `aria-hidden="true"`.
 - Textbuttons bleiben auch bei Hover/Pressed transparent. Die weiße Border und
   der Fokusindikator folgen den anderen Buttons. Der Text folgt der Theme-Farbe.
 - Es gibt bewusst keine Inputs für lokale Farben, Größen oder zusätzliche
-  Chip-Varianten. Formulare folgen später.
+  Chip-Varianten. Formularfelder sind ebenfalls verfügbar.
 
 ## Tests
 
@@ -177,3 +177,36 @@ Inhalt und unterstützt Two-Way-Binding. Ein-/Ausklappen behält Kindzustände b
 `uiCardHeader` ist ein Projektionsattribut ohne zusätzlichen Angular-Import.
 `--ui-card-background` und `--ui-card-text` in `theme.css` steuern die weiße
 Card-Fläche und deren dunklen Text zentral.
+
+## Formularfelder
+
+`FormField` und `Input` sind Standalone-Exporte aus `@creaera/ui`. Ein kleines
+Label steht links über dem Feld; Border und Fokus verwenden die Primärfarbe,
+im Fehlerfall `--ui-status-dangerous`.
+
+```html
+<ui-form-field label="E-Mail" [error]="emailError">
+  <input uiInput type="email" autocomplete="email" [formControl]="email" />
+</ui-form-field>
+<ui-form-field label="Nachricht">
+  <textarea uiInput rows="4" [(ngModel)]="message"></textarea>
+</ui-form-field>
+```
+
+`label` ist erforderlich; `error` ist ein optionaler Meldungstext (Standard `''`).
+Pro FormField ein direktes natives Feld verwenden. Die Bindung erfolgt am
+`input`/`textarea`; dadurch bleiben HTML-Attribute, Events sowie Angular Forms
+inklusive Zahlenwerten erhalten. Für Reactive Forms `ReactiveFormsModule`, für
+`ngModel` `FormsModule` importieren.
+
+Ungültige Angular-Controls erhalten nach `dirty` oder `touched` automatisch eine
+rote Border und eine allgemeine Fehlermeldung. Eigene Texte über `error` setzen;
+ein nicht leerer Text aktiviert den Fehlerzustand sofort. Die Anwendung definiert
+die Validatoren und ruft bei Bedarf `form.markAllAsTouched()` beim Absenden auf.
+Ohne Angular Forms steuert `error` den Fehlerzustand. Label, Feld-ID und
+Fehlerbeschreibung sind automatisch zugänglich verknüpft.
+
+Storybook enthält Text-, E-Mail-, Passwort-, Zahlen- und Datumsfelder, Textareas,
+Fehler-, Disabled- und Readonly-Zustände sowie ein vollständiges Formularbeispiel.
+Die Anleitung steht unter **Anwenderdoku → Formularfelder**. Labelgröße und
+Farben werden zentral über `theme.css` konfiguriert.

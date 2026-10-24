@@ -320,6 +320,64 @@
     outline: 2px solid var(--ui-card-border);
     outline-offset: 3px;
   }
+  .ui-form-field {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.375rem;
+    min-width: 0;
+    color: var(--ui-font-default);
+  }
+  .ui-field-label {
+    display: block;
+    text-align: start;
+    font-size: var(--ui-field-label-size);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .ui-input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: var(--ui-button-height);
+    padding: 0.625rem var(--ui-padding);
+    border: 1px solid var(--ui-interaction-primary);
+    border-radius: var(--ui-radius);
+    background: var(--ui-background-secondary);
+    color: var(--ui-font-default);
+    font: inherit;
+    font-size: var(--ui-font-size);
+    line-height: 1.4;
+  }
+  textarea.ui-input {
+    min-height: 7rem;
+    resize: vertical;
+  }
+  .ui-input::placeholder {
+    color: var(--ui-font-default);
+    opacity: 0.65;
+  }
+  .ui-input:focus-visible {
+    outline: 2px solid var(--ui-interaction-primary);
+    outline-offset: 2px;
+  }
+  .ui-field-invalid .ui-input {
+    border-color: var(--ui-status-dangerous);
+  }
+  .ui-field-invalid .ui-input:focus-visible {
+    outline-color: var(--ui-status-dangerous);
+  }
+  .ui-field-error {
+    margin: 0;
+    color: var(--ui-status-dangerous);
+    font-size: var(--ui-field-label-size);
+    line-height: 1.5;
+  }
+  .ui-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
   .ui-menu-anchor {
     position: relative;
     display: inline-block;

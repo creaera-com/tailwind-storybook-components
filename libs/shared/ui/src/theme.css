@@ -49,6 +49,7 @@
   --ui-font-size: 0.875rem;
   --ui-control-size: 1.25rem;
   --ui-radius: 0.625rem;
+  --ui-field-label-size: 0.75rem;
   --ui-card-background: #ffffff;
   --ui-card-text: #183c2a;
 }

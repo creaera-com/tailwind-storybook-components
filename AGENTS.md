@@ -102,7 +102,7 @@ bezeichnen. Die minimale öffentliche API ist in README.md dokumentiert.
 
 ## Spätere Erweiterungen
 
-Formulare sind für eine spätere Phase vorgesehen. Cards sind inzwischen freigegeben.
+Cards und Formularfelder sind inzwischen freigegeben.
 
 ## Ergänzungen: Chips, Sekundärfarbe und Cards
 
@@ -112,3 +112,10 @@ Formulare sind für eine spätere Phase vorgesehen. Cards sind inzwischen freige
 - Ausklappbare Cards haben unten mittig einen Pfeil und sehen wie drei
   übereinander gestapelte Cards aus.
 - Card-Flächen sind weiß; die Border ist primär oder optional sekundär.
+
+## Ergänzungen: Formularfelder
+
+- Unterschiedliche native Eingabetypen und mehrzeilige Textfelder anbieten.
+- Kleine Labels links oberhalb der Felder.
+- Primärfarbene Border im Normalzustand, zentrale rote Fehlerfarbe bei Fehlern.
+- Angular Forms, zugängliche Label-/Fehlerverknüpfung sowie zentrale Themes und Größen berücksichtigen.

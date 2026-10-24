@@ -16,7 +16,7 @@ test('all published stories render without Angular or browser errors', async ({
     await expect(
       page
         .locator(
-          '#storybook-root .ui-button, #storybook-root .ui-choice, #storybook-root .ui-radio, #storybook-root .ui-chip, #storybook-root .ui-card',
+          '#storybook-root .ui-button, #storybook-root .ui-choice, #storybook-root .ui-radio, #storybook-root .ui-chip, #storybook-root .ui-card, #storybook-root .ui-form-field',
         )
         .first(),
     ).toBeVisible();
@@ -129,6 +129,7 @@ test('user documentation renders all guides, code examples and the shared README
     ['Anwenderdoku/Light und Dark Mode', 'Light und Dark Mode', "setTheme('dark')"],
     ['Anwenderdoku/Responsive Größen', 'Responsive Größen', '--ui-button-height'],
     ['Anwenderdoku/Komponenten verwenden', 'Komponenten verwenden', 'ReactiveFormsModule'],
+    ['Anwenderdoku/Formularfelder', 'Formularfelder', 'ReactiveFormsModule'],
     ['Anwenderdoku/API und Projektaufbau', 'Creaera UI', 'Kleine öffentliche API'],
   ];
   for (const [title, heading, example] of guides) {
@@ -223,4 +224,81 @@ test('secondary buttons and card borders use neutral gray tokens', async ({ page
   await page.mouse.up();
   await page.goto('/iframe.html?id=components-card--secondary&viewMode=story');
   await expect(page.locator('.ui-card-surface')).toHaveCSS('border-top-color', 'rgb(82, 82, 91)');
+});
+
+test('form inputs have a small label above, primary borders and accessible error descriptions', async ({
+  page,
+}) => {
+  await page.goto('/iframe.html?id=components-form-field--text&viewMode=story');
+  const input = page.getByRole('textbox', { name: 'Name', exact: true });
+  const label = page.locator('.ui-field-label');
+  await expect(input).toHaveCSS('border-top-color', 'rgb(20, 108, 67)');
+  await expect(label).toHaveCSS('font-size', '12px');
+  const inputBox = await input.boundingBox();
+  const labelBox = await label.boundingBox();
+  expect(labelBox!.y + labelBox!.height).toBeLessThan(inputBox!.y);
+  expect(labelBox!.x).toBe(inputBox!.x);
+  await label.click();
+  await expect(input).toBeFocused();
+  await page.goto('/iframe.html?id=components-form-field--error&viewMode=story');
+  const errorInput = page.getByRole('textbox', { name: 'Name', exact: true });
+  await expect(errorInput).toHaveCSS('border-top-color', 'rgb(180, 35, 53)');
+  await expect(errorInput).toHaveAttribute('aria-invalid', 'true');
+  await expect(errorInput).toHaveAccessibleDescription('Bitte einen gültigen Namen eingeben.');
+  await errorInput.focus();
+  await expect(errorInput).toHaveCSS('outline-color', 'rgb(180, 35, 53)');
+  await page.evaluate(() => {
+    document.body.classList.remove('ui-light');
+    document.body.classList.add('ui-dark');
+  });
+  await expect(errorInput).toHaveCSS('border-top-color', 'rgb(255, 154, 165)');
+});
+
+test('reactive form validates on submit and clears errors when values become valid', async ({
+  page,
+}) => {
+  await page.goto('/iframe.html?id=components-form-field--reactive-form&viewMode=story');
+  const name = page.getByRole('textbox', { name: 'Name', exact: true });
+  const email = page.getByRole('textbox', { name: 'E-Mail', exact: true });
+  const message = page.getByRole('textbox', { name: 'Nachricht', exact: true });
+  await expect(page.locator('.ui-field-error')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Absenden' }).click();
+  await expect(page.locator('.ui-field-error')).toHaveCount(3);
+  await expect(name).toHaveAttribute('aria-invalid', 'true');
+  await name.fill('Lea');
+  await email.fill('ungültig');
+  await message.fill('Eine Nachricht.');
+  await expect(page.locator('.ui-field-error')).toHaveCount(1);
+  await email.fill('lea@example.com');
+  await expect(page.locator('.ui-field-error')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Absenden' }).click();
+  await expect(page.getByRole('status')).toContainText('Formular gültig.');
+});
+
+test('input types, multiline content, readonly, disabled and responsive sizes remain native', async ({
+  page,
+}) => {
+  for (const [story, type] of [
+    ['email', 'email'],
+    ['password', 'password'],
+    ['number', 'number'],
+    ['date', 'date'],
+  ]) {
+    await page.goto(`/iframe.html?id=components-form-field--${story}&viewMode=story`);
+    await expect(page.locator('input.ui-input')).toHaveAttribute('type', type);
+  }
+  await page.goto('/iframe.html?id=components-form-field--textarea&viewMode=story');
+  const textarea = page.getByRole('textbox', { name: 'Nachricht' });
+  await textarea.fill('Erste Zeile\nZweite Zeile');
+  await expect(textarea).toHaveValue('Erste Zeile\nZweite Zeile');
+  await page.goto('/iframe.html?id=components-form-field--disabled&viewMode=story');
+  await expect(page.getByRole('textbox', { name: 'Name' })).toBeDisabled();
+  await page.goto('/iframe.html?id=components-form-field--readonly&viewMode=story');
+  await expect(page.getByRole('textbox', { name: 'Referenz' })).toHaveAttribute('readonly', '');
+  await page.setViewportSize({ width: 375, height: 700 });
+  await page.goto('/iframe.html?id=components-form-field--text&viewMode=story');
+  const input = page.getByRole('textbox', { name: 'Name' });
+  await expect(input).toHaveCSS('min-height', '44px');
+  await page.evaluate(() => document.body.classList.add('ui-large'));
+  await expect(input).toHaveCSS('min-height', '48px');
 });
