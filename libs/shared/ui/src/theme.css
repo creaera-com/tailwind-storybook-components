@@ -9,11 +9,12 @@
   --ui-font-default: #183c2a;
   --ui-font-disabled: #e2e8e4;
   --ui-interaction-primary: #146c43;
-  --ui-interaction-secondary: #355f4c;
+  --ui-interaction-secondary: #52525b;
+  --ui-interaction-hover-secondary: #46464f;
   --ui-interaction-disabled: #69776e;
   --ui-interaction-hover: #105b38;
   --ui-interaction-pressed-primary: #0b472b;
-  --ui-interaction-pressed-secondary: #244233;
+  --ui-interaction-pressed-secondary: #3f3f46;
   --ui-interaction-divider: #cedbd2;
   --ui-status-normal: #146c43;
   --ui-status-caution: #875800;
@@ -28,11 +29,12 @@
   --ui-font-default: #e2f0e6;
   --ui-font-disabled: #b2bdb5;
   --ui-interaction-primary: #237a4f;
-  --ui-interaction-secondary: #416c55;
+  --ui-interaction-secondary: #60606b;
+  --ui-interaction-hover-secondary: #52525d;
   --ui-interaction-disabled: #49584e;
   --ui-interaction-hover: #1b6942;
   --ui-interaction-pressed-primary: #145534;
-  --ui-interaction-pressed-secondary: #2f503d;
+  --ui-interaction-pressed-secondary: #45454f;
   --ui-interaction-divider: #3b5142;
   --ui-status-normal: #79dba1;
   --ui-status-caution: #f0c66a;
@@ -47,6 +49,8 @@
   --ui-font-size: 0.875rem;
   --ui-control-size: 1.25rem;
   --ui-radius: 0.625rem;
+  --ui-card-background: #ffffff;
+  --ui-card-text: #183c2a;
 }
 @media (min-width: 48rem) {
   :root {

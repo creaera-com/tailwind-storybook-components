@@ -102,5 +102,13 @@ bezeichnen. Die minimale öffentliche API ist in README.md dokumentiert.
 
 ## Spätere Erweiterungen
 
-Cards und Formulare sind für eine spätere Phase vorgesehen und gehören nicht
-zum aktuellen Implementierungsumfang.
+Formulare sind für eine spätere Phase vorgesehen. Cards sind inzwischen freigegeben.
+
+## Ergänzungen: Chips, Sekundärfarbe und Cards
+
+- Chips erhalten einen kleinen, separaten X-Button zum Entfernen.
+- Die Sekundärfarbe ist in beiden Themes grau, inklusive Hover und Pressed.
+- Cards: normale und ausklappbare Variante; Cards dürfen verschachtelt werden.
+- Ausklappbare Cards haben unten mittig einen Pfeil und sehen wie drei
+  übereinander gestapelte Cards aus.
+- Card-Flächen sind weiß; die Border ist primär oder optional sekundär.

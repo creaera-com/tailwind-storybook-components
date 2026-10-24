@@ -27,27 +27,32 @@ alternativ Tokens in deren globaler CSS-Datei **nach** den Bibliotheksstyles
 
 ## Alle Farbrollen
 
-| Bereich      | CSS-Variable                         | Verwendung / Bedeutung                      |
-| ------------ | ------------------------------------ | ------------------------------------------- |
-| Background   | `--ui-background-primary`            | Seitenhintergrund                           |
-| Background   | `--ui-background-secondary`          | Flächen und Menü-Hintergründe               |
-| Background   | `--ui-background-tertiary`           | Graue Flächen, etwa Tertiärbuttons          |
-| Fonts        | `--ui-font-active`                   | Schrift auf gefüllten Buttons               |
-| Fonts        | `--ui-font-default`                  | Standardtext und Textbuttons                |
-| Fonts        | `--ui-font-disabled`                 | Text auf deaktivierten gefüllten Buttons    |
-| Interactions | `--ui-interaction-primary`           | Primäraktionen und ausgewählte Controls     |
-| Interactions | `--ui-interaction-secondary`         | Sekundäraktionen                            |
-| Interactions | `--ui-interaction-disabled`          | Deaktivierte Interaktionsflächen bzw. Texte |
-| Interactions | `--ui-interaction-hover`             | Gemeinsame Hover-Farbe gefüllter Buttons    |
-| Interactions | `--ui-interaction-pressed-primary`   | Gedrückte Primäraktionen                    |
-| Interactions | `--ui-interaction-pressed-secondary` | Gedrückte Sekundäraktionen                  |
-| Interactions | `--ui-interaction-divider`           | Trennlinien und dezente Umrandungen         |
-| Status       | `--ui-status-normal`                 | Normaler Status                             |
-| Status       | `--ui-status-caution`                | Hinweis / Vorsicht                          |
-| Status       | `--ui-status-dangerous`              | Gefahr / Fehler                             |
+| Bereich      | CSS-Variable                         | Verwendung / Bedeutung                       |
+| ------------ | ------------------------------------ | -------------------------------------------- |
+| Background   | `--ui-background-primary`            | Seitenhintergrund                            |
+| Background   | `--ui-background-secondary`          | Flächen und Menü-Hintergründe                |
+| Background   | `--ui-background-tertiary`           | Graue Flächen, etwa Tertiärbuttons           |
+| Fonts        | `--ui-font-active`                   | Schrift auf gefüllten Buttons                |
+| Fonts        | `--ui-font-default`                  | Standardtext und Textbuttons                 |
+| Fonts        | `--ui-font-disabled`                 | Text auf deaktivierten gefüllten Buttons     |
+| Interactions | `--ui-interaction-primary`           | Primäraktionen und ausgewählte Controls      |
+| Interactions | `--ui-interaction-secondary`         | Sekundäraktionen                             |
+| Interactions | `--ui-interaction-disabled`          | Deaktivierte Interaktionsflächen bzw. Texte  |
+| Interactions | `--ui-interaction-hover`             | Hover-Farbe gefüllter Primär-/Tertiärbuttons |
+| Interactions | `--ui-interaction-pressed-primary`   | Gedrückte Primäraktionen                     |
+| Interactions | `--ui-interaction-pressed-secondary` | Gedrückte Sekundäraktionen                   |
+| Interactions | `--ui-interaction-divider`           | Trennlinien und dezente Umrandungen          |
+| Status       | `--ui-status-normal`                 | Normaler Status                              |
+| Status       | `--ui-status-caution`                | Hinweis / Vorsicht                           |
+| Status       | `--ui-status-dangerous`              | Gefahr / Fehler                              |
 
 Statusfarben stehen als Design-Tokens bereit. Eigenständige Statuskomponenten
 sind noch nicht Bestandteil der Bibliothek.
+
+Card-Flächen sind bewusst in beiden Themes weiß. Die zusätzlichen zentralen
+Tokens `--ui-card-background` und `--ui-card-text` steuern ihre Fläche und den
+dunklen Text. `--ui-interaction-hover-secondary` steuert den grauen Hover-Zustand
+der Sekundärbuttons. Die Sekundärfarbe und deren Pressed-Farbe sind ebenfalls grau.
 
 ## Beispiel: eine andere Grünpalette
 
@@ -57,20 +62,20 @@ In der globalen Anwendungs-CSS-Datei nach den Bibliotheksstyles:
 :root,
 .ui-light {
   --ui-interaction-primary: #166534;
-  --ui-interaction-secondary: #3f6250;
+  --ui-interaction-secondary: #52525b;
   --ui-interaction-hover: #14532d;
   --ui-interaction-pressed-primary: #104326;
-  --ui-interaction-pressed-secondary: #2e493b;
+  --ui-interaction-pressed-secondary: #3f3f46;
   --ui-background-primary: #f0fdf4;
   --ui-font-default: #153523;
 }
 
 .ui-dark {
   --ui-interaction-primary: #28734c;
-  --ui-interaction-secondary: #3d6450;
+  --ui-interaction-secondary: #60606b;
   --ui-interaction-hover: #205f3f;
   --ui-interaction-pressed-primary: #174b31;
-  --ui-interaction-pressed-secondary: #2d4b3b;
+  --ui-interaction-pressed-secondary: #45454f;
   --ui-background-primary: #0d1b13;
   --ui-font-default: #e4f4e9;
 }

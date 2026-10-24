@@ -57,16 +57,17 @@ Alle Komponenten und Direktiven sind standalone und aus `@creaera/ui` importierb
 Kein globales Angular-Modul und keine providers-Konfiguration erforderlich.
 Native HTML-Attribute und Events werden verwendet, wo sie bereits ausreichen.
 
-| Export         | Verwendung                                | Minimale API                                                                                                            |
-| -------------- | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `Button`       | `<button uiButton>`                       | `variant`: primary (Default), secondary, tertiary, text; `type`: button (Default), submit, reset; native disabled/click |
-| `Checkbox`     | `<ui-checkbox>Beschriftung</ui-checkbox>` | `[(checked)]`, disabled; alternativ ngModel oder FormControl                                                            |
-| `ToggleSwitch` | `<ui-switch>Beschriftung</ui-switch>`     | `[(checked)]`, disabled; alternativ ngModel oder FormControl                                                            |
-| `Radio`        | `<input type="radio" uiRadio>`            | native name/value/disabled; ngModel oder FormControl                                                                    |
-| `ButtonGroup`  | `<ui-button-group>`                       | options, label, `[(selected)]` (string[]), multiple (Default false), disabled                                           |
-| `Chip`         | `<button uiChip>`                         | native disabled/click; Action-Chip ohne Auswahlmodell                                                                   |
-| `Dropdown`     | `<ui-dropdown>`                           | label, options, disabled; `(selected)` liefert den value                                                                |
-| `OptionButton` | `<ui-option-button>`                      | wie Dropdown, zusätzlich `(action)` für den Hauptbutton                                                                 |
+| Export         | Verwendung                                | Minimale API                                                                                                               |
+| -------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `Button`       | `<button uiButton>`                       | `variant`: primary (Default), secondary, tertiary, text; `type`: button (Default), submit, reset; native disabled/click    |
+| `Checkbox`     | `<ui-checkbox>Beschriftung</ui-checkbox>` | `[(checked)]`, disabled; alternativ ngModel oder FormControl                                                               |
+| `ToggleSwitch` | `<ui-switch>Beschriftung</ui-switch>`     | `[(checked)]`, disabled; alternativ ngModel oder FormControl                                                               |
+| `Radio`        | `<input type="radio" uiRadio>`            | native name/value/disabled; ngModel oder FormControl                                                                       |
+| `ButtonGroup`  | `<ui-button-group>`                       | options, label, `[(selected)]` (string[]), multiple (Default false), disabled                                              |
+| `Chip`         | `<ui-chip>`                               | disabled; `(removed)` beim Klick auf das X; Elternkomponente entfernt den Chip                                             |
+| `Card`         | `<ui-card>`                               | collapsible (Default false), `[(expanded)]` (Default false), border (primary/secondary), label für die Toggle-Beschriftung |
+| `Dropdown`     | `<ui-dropdown>`                           | label, options, disabled; `(selected)` liefert den value                                                                   |
+| `OptionButton` | `<ui-option-button>`                      | wie Dropdown, zusätzlich `(action)` für den Hauptbutton                                                                    |
 
 `UiOption` ist `{ value: string; label: string; disabled?: boolean }`.
 Werte müssen innerhalb einer Optionsliste eindeutig sein. In Button Groups ist
@@ -125,7 +126,7 @@ Buttons benötigen ein `aria-label`; dekorative Icons `aria-hidden="true"`.
 - Textbuttons bleiben auch bei Hover/Pressed transparent. Die weiße Border und
   der Fokusindikator folgen den anderen Buttons. Der Text folgt der Theme-Farbe.
 - Es gibt bewusst keine Inputs für lokale Farben, Größen oder zusätzliche
-  Chip-Varianten. Cards und Formulare folgen später.
+  Chip-Varianten. Formulare folgen später.
 
 ## Tests
 
@@ -136,3 +137,43 @@ Button-Semantik, Forms, Auswahlzustände und Menü-/Tastaturinteraktionen.
 Themes/Größenprofile mit Playwright. Einmalig `npx playwright install chromium`
 ausführen oder `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` auf einen vorhandenen
 Chromium setzen. In CI wird Chromium mit Systemabhängigkeiten installiert.
+
+## Entfernbare Chips und Cards
+
+Chips verwenden jetzt einen Container mit einem separaten X-Button statt
+`<button uiChip>`. So entstehen keine verschachtelten Buttons:
+
+```html
+@if (showTag) {
+<ui-chip (removed)="showTag = false">Designsystem</ui-chip>
+}
+```
+
+`removed` meldet den Entfernungswunsch; die konsumierende Komponente aktualisiert
+ihre Liste. `[disabled]="true"` sperrt das X. Der zugängliche Name enthält den
+sichtbaren Chip-Text.
+
+Cards sind weiß mit primärer oder optional sekundärer (grauer) Border, auch im
+Dark Mode. `uiCardHeader` markiert den immer sichtbaren Kopf. Der übrige Inhalt
+wird bei ausklappbaren Cards ein-/ausgeblendet. Der Pfeil liegt unten mittig;
+die ausklappbare Variante sieht durch zwei zusätzliche Ebenen wie drei gestapelte
+Cards aus. Cards können ohne besondere Konfiguration ineinander verschachtelt
+werden, inklusive unabhängiger ausklappbarer Cards.
+
+```html
+<ui-card>
+  <h2 uiCardHeader>Übersicht</h2>
+  <ui-card collapsible border="secondary" label="Projektdetails" [(expanded)]="detailsOpen">
+    <h3 uiCardHeader>Projektdetails</h3>
+    <p>Inhalt der inneren Card.</p>
+  </ui-card>
+</ui-card>
+```
+
+`Card` aus `@creaera/ui` importieren. Ohne `collapsible` ist der Inhalt immer
+sichtbar. `expanded` startet mit false, steuert bei ausklappbaren Cards den
+Inhalt und unterstützt Two-Way-Binding. Ein-/Ausklappen behält Kindzustände bei.
+`label` sollte die Card benennen; der Button ergänzt „ausklappen“ / „einklappen“.
+`uiCardHeader` ist ein Projektionsattribut ohne zusätzlichen Angular-Import.
+`--ui-card-background` und `--ui-card-text` in `theme.css` steuern die weiße
+Card-Fläche und deren dunklen Text zentral.

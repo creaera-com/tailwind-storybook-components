@@ -5,3 +5,4 @@ export { ButtonGroup } from './lib/button-group';
 export { Chip } from './lib/chip';
 export { Dropdown, OptionButton } from './lib/menu';
 export type { UiOption } from './lib/option';
+export { Card } from './lib/card';

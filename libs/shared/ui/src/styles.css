@@ -22,6 +22,7 @@
   .ui-chip {
     --ui-button-bg: var(--ui-interaction-primary);
     --ui-button-pressed: var(--ui-interaction-pressed-primary);
+    --ui-button-hover: var(--ui-interaction-hover);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -44,6 +45,7 @@
   }
   .ui-button[data-variant='secondary'] {
     --ui-button-bg: var(--ui-interaction-secondary);
+    --ui-button-hover: var(--ui-interaction-hover-secondary);
     --ui-button-pressed: var(--ui-interaction-pressed-secondary);
   }
   .ui-button[data-variant='tertiary'] {
@@ -57,7 +59,7 @@
   .ui-button:hover:not(:disabled),
   .ui-chip:hover:not(:disabled) {
     border-color: white;
-    background: var(--ui-interaction-hover);
+    background: var(--ui-button-hover);
     color: white;
   }
   .ui-button:active:not(:disabled),
@@ -185,9 +187,138 @@
     background: var(--ui-interaction-disabled);
   }
   .ui-chip {
+    cursor: default;
     border-radius: 999px;
     min-height: 2rem;
     padding: 0.25rem 0.875rem;
+  }
+  .ui-chip-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    flex: none;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+  }
+  .ui-chip-close svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .ui-chip-close:hover:not(:disabled) {
+    border-color: white;
+    background: #ffffff20;
+  }
+  .ui-chip-close:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+  .ui-chip:focus-within {
+    border-color: white;
+  }
+  .ui-chip[data-disabled='true'] {
+    background: var(--ui-interaction-disabled);
+    color: var(--ui-font-disabled);
+    border-color: white;
+    cursor: not-allowed;
+  }
+  .ui-chip[data-disabled='true']:hover,
+  .ui-chip[data-disabled='true']:active {
+    background: var(--ui-interaction-disabled);
+    color: var(--ui-font-disabled);
+    box-shadow: none;
+  }
+  .ui-chip-close:disabled {
+    cursor: not-allowed;
+  }
+  .ui-card {
+    --ui-card-border: var(--ui-interaction-primary);
+    --ui-font-default: var(--ui-card-text);
+    --ui-background-secondary: var(--ui-card-background);
+    display: block;
+    position: relative;
+    isolation: isolate;
+    min-width: 0;
+    color: var(--ui-card-text);
+    color-scheme: light;
+  }
+  .ui-card[data-border='secondary'] {
+    --ui-card-border: var(--ui-interaction-secondary);
+  }
+  .ui-card-surface {
+    position: relative;
+    background: var(--ui-card-background);
+    border: 1px solid var(--ui-card-border);
+    border-radius: var(--ui-radius);
+    padding: var(--ui-padding);
+    overflow-wrap: anywhere;
+  }
+  .ui-card-header:empty {
+    display: none;
+  }
+  .ui-card-header:not(:empty) {
+    margin-bottom: var(--ui-margin);
+  }
+  .ui-card-content[hidden] {
+    display: none;
+  }
+  .ui-card-content > .ui-card + .ui-card {
+    margin-top: calc(var(--ui-margin) + 1rem);
+  }
+  .ui-card-stacked {
+    margin-bottom: 1rem;
+  }
+  .ui-card-stacked::before,
+  .ui-card-stacked::after {
+    content: '';
+    position: absolute;
+    border: 1px solid var(--ui-card-border);
+    border-radius: var(--ui-radius);
+    background: var(--ui-card-background);
+    pointer-events: none;
+  }
+  .ui-card-stacked::before {
+    inset: 6px 6px -7px;
+    z-index: -1;
+  }
+  .ui-card-stacked::after {
+    inset: 12px 12px -14px;
+    z-index: -2;
+  }
+  .ui-card-footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5rem;
+  }
+  .ui-card-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--ui-card-border);
+    border-radius: 50%;
+    background: var(--ui-card-background);
+    color: var(--ui-card-border);
+    cursor: pointer;
+  }
+  .ui-card-toggle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .ui-card-arrow-expanded {
+    transform: rotate(180deg);
+  }
+  .ui-card-toggle:hover {
+    background: #f1f5f2;
+  }
+  .ui-card-toggle:focus-visible {
+    outline: 2px solid var(--ui-card-border);
+    outline-offset: 3px;
   }
   .ui-menu-anchor {
     position: relative;
