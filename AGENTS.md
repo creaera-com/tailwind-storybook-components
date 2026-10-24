@@ -119,3 +119,10 @@ Cards und Formularfelder sind inzwischen freigegeben.
 - Kleine Labels links oberhalb der Felder.
 - Primärfarbene Border im Normalzustand, zentrale rote Fehlerfarbe bei Fehlern.
 - Angular Forms, zugängliche Label-/Fehlerverknüpfung sowie zentrale Themes und Größen berücksichtigen.
+
+## Ergänzung: Autocomplete
+
+- Autocomplete mit Vorschlägen, lokaler Textfilterung und Tastaturbedienung.
+- Labels, Border, Fehlerzustände, Themes und Größen wie bei den Formularfeldern.
+- Kleine API mit Textvorschlägen und Unterstützung für Angular Forms.
+- Startannahme: Freier Text ist zulässig; fachliche Einschränkungen über Validatoren.

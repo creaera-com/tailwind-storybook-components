@@ -130,6 +130,7 @@ test('user documentation renders all guides, code examples and the shared README
     ['Anwenderdoku/Responsive Größen', 'Responsive Größen', '--ui-button-height'],
     ['Anwenderdoku/Komponenten verwenden', 'Komponenten verwenden', 'ReactiveFormsModule'],
     ['Anwenderdoku/Formularfelder', 'Formularfelder', 'ReactiveFormsModule'],
+    ['Anwenderdoku/Autocomplete', 'Autocomplete', 'ReactiveFormsModule'],
     ['Anwenderdoku/API und Projektaufbau', 'Creaera UI', 'Kleine öffentliche API'],
   ];
   for (const [title, heading, example] of guides) {
@@ -301,4 +302,75 @@ test('input types, multiline content, readonly, disabled and responsive sizes re
   await expect(input).toHaveCSS('min-height', '44px');
   await page.evaluate(() => document.body.classList.add('ui-large'));
   await expect(input).toHaveCSS('min-height', '48px');
+});
+
+test('autocomplete filters, selects by keyboard and retains focus on its combobox', async ({
+  page,
+}) => {
+  await page.goto('/iframe.html?id=components-autocomplete--default&viewMode=story');
+  const input = page.getByRole('combobox', { name: 'Stadt' });
+  await input.fill('ber');
+  await expect(page.getByRole('option')).toHaveText(['Berlin', 'Bern']);
+  await expect(input).toHaveAttribute('aria-expanded', 'true');
+  await input.press('ArrowDown');
+  await expect(page.getByRole('option', { name: 'Berlin', exact: true })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  );
+  await input.press('ArrowDown');
+  await input.press('Enter');
+  await expect(input).toHaveValue('Bern');
+  await expect(input).toBeFocused();
+  await expect(page.getByRole('listbox')).not.toBeVisible();
+  await expect(page.getByText('Eingabe: Bern')).toBeVisible();
+  await input.fill('Mün');
+  await page.getByRole('option', { name: 'München' }).click();
+  await expect(input).toHaveValue('München');
+  await expect(input).toBeFocused();
+  await expect(page.getByRole('listbox')).not.toBeVisible();
+});
+
+test('autocomplete handles empty results, Escape, Tab and required form validation', async ({
+  page,
+}) => {
+  await page.goto('/iframe.html?id=components-autocomplete--default&viewMode=story');
+  const input = page.getByRole('combobox', { name: 'Stadt' });
+  await input.fill('Leipzig');
+  await expect(page.getByRole('status')).toHaveText('Keine Vorschläge gefunden.');
+  await input.press('Escape');
+  await expect(page.getByRole('listbox')).not.toBeVisible();
+  await expect(input).toHaveValue('Leipzig');
+  await input.fill('Ber');
+  await input.press('Tab');
+  await expect(page.getByRole('listbox')).not.toBeVisible();
+  await page.goto('/iframe.html?id=components-autocomplete--reactive-form&viewMode=story');
+  const formInput = page.getByRole('combobox', { name: 'Stadt' });
+  await page.getByRole('button', { name: 'Übernehmen' }).click();
+  await expect(formInput).toHaveAttribute('aria-invalid', 'true');
+  await expect(formInput).toHaveAccessibleDescription('Bitte Eingabe prüfen.');
+  await formInput.fill('Ber');
+  await formInput.press('ArrowDown');
+  await formInput.press('Enter');
+  await expect(formInput).toHaveValue('Berlin');
+  await page.getByRole('button', { name: 'Übernehmen' }).click();
+  await expect(page.getByRole('status')).toHaveText('Ausgewählte Eingabe: Berlin');
+});
+
+test('autocomplete supports disabled, error and Dark Mode states', async ({ page }) => {
+  await page.goto('/iframe.html?id=components-autocomplete--disabled&viewMode=story');
+  await expect(page.getByRole('combobox', { name: 'Stadt' })).toBeDisabled();
+  await page.goto('/iframe.html?id=components-autocomplete--error&viewMode=story');
+  const input = page.getByRole('combobox', { name: 'Stadt' });
+  await expect(input).toHaveCSS('border-top-color', 'rgb(180, 35, 53)');
+  await page.evaluate(() => {
+    document.body.classList.remove('ui-light');
+    document.body.classList.add('ui-dark');
+  });
+  await expect(input).toHaveCSS('border-top-color', 'rgb(255, 154, 165)');
+  await input.fill('Ber');
+  await expect(page.getByRole('listbox')).toBeVisible();
+  await expect(page.locator('.ui-autocomplete-popup')).toHaveCSS(
+    'background-color',
+    'rgb(26, 44, 33)',
+  );
 });
