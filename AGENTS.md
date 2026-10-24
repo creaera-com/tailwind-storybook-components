@@ -5,6 +5,11 @@
 Die Umsetzung der ersten Phase ist vom Nutzer freigegeben.
 Die Anforderungen und die Umsetzung dürfen committed werden.
 
+## Git-Workflow
+
+- Änderungen auf einem eigenen Branch entwickeln und als Pull Request öffnen.
+- Nicht direkt auf `main` pushen.
+
 ## Komponenten-API
 
 - Eigenständige, sinnvoll geschnittene Angular-Komponenten, ähnlich Angular

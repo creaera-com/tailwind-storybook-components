@@ -3,6 +3,12 @@
 Angular-Komponenten mit einer kleinen API, Tailwind CSS und Storybook in einem
 Nx-Workspace. Angular 22 · Nx 24 · Tailwind CSS 4 · Storybook 10.
 
+## Anwenderdokumentation in Storybook
+
+Unter **Anwenderdoku** stehen die Anleitung zum Einstieg, die vollständige
+Farbkonfiguration, Light/Dark Mode, responsive Größen und die API-/Projektreferenz.
+Die Referenz übernimmt diese README direkt, damit beide Stellen synchron bleiben.
+
 ## Entwicklung
 
 Node.js 24 (mindestens 24.15) und npm verwenden:
