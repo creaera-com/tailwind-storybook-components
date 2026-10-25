@@ -297,3 +297,13 @@ Die separaten Tests verwenden Angulars HTTP-Testbackend und prüfen auch
 Stornierung, Nebenläufigkeit und Injector-Lifecycle. NgRx 22.0.1 und der Router
 sind Entwicklungsabhängigkeiten für diese Beispiele. Das veröffentlichbare
 UI-Paket erhält keine NgRx-Laufzeitabhängigkeit.
+
+## Offline-Handbuch als PDF
+
+Das [PDF-Handbuch](docs/creaera-ui-handbuch.pdf) enthält die Anwender- und
+Architektur-Dokumentation inklusive Codebeispielen und verlinktem Inhaltsverzeichnis.
+In GitHub die PDF-Datei öffnen und über **Download raw file** herunterladen;
+auf dem iPad anschließend in Dateien oder Apple Bücher speichern.
+
+Der Export ist eine Momentaufnahme vom 25. Oktober 2026 (Quellstand `ce81ebc`),
+keine automatisch aktualisierte Ausgabe. Interaktive Stories bleiben in Storybook.
