@@ -16,7 +16,7 @@ test('all published stories render without Angular or browser errors', async ({
     await expect(
       page
         .locator(
-          '#storybook-root .ui-button, #storybook-root .ui-choice, #storybook-root .ui-radio, #storybook-root .ui-chip, #storybook-root .ui-card',
+          '#storybook-root .ui-button, #storybook-root .ui-choice, #storybook-root .ui-radio, #storybook-root .ui-chip, #storybook-root .ui-card, #storybook-root .ui-tree, #storybook-root .ui-tree-table',
         )
         .first(),
     ).toBeVisible();
@@ -129,6 +129,7 @@ test('user documentation renders all guides, code examples and the shared README
     ['Anwenderdoku/Light und Dark Mode', 'Light und Dark Mode', "setTheme('dark')"],
     ['Anwenderdoku/Responsive Größen', 'Responsive Größen', '--ui-button-height'],
     ['Anwenderdoku/Komponenten verwenden', 'Komponenten verwenden', 'ReactiveFormsModule'],
+    ['Anwenderdoku/Trees', 'Tree und Tree Table', 'UiTreeNode'],
     ['Anwenderdoku/API und Projektaufbau', 'Creaera UI', 'Kleine öffentliche API'],
   ];
   for (const [title, heading, example] of guides) {
@@ -223,6 +224,76 @@ test('secondary buttons and card borders use neutral gray tokens', async ({ page
   await page.mouse.up();
   await page.goto('/iframe.html?id=components-card--secondary&viewMode=story');
   await expect(page.locator('.ui-card-surface')).toHaveCSS('border-top-color', 'rgb(82, 82, 91)');
+});
+
+for (const kind of ['tree', 'tree-table']) {
+  test(`${kind}: expands, selects and navigates the hierarchy with keyboard and mouse`, async ({
+    page,
+  }) => {
+    await page.goto(`/iframe.html?id=components-${kind}--collapsed&viewMode=story`);
+    const control = page.locator(`ui-${kind}`);
+    const root = control.locator('[data-tree-id="design"]');
+    await expect(control.locator('[data-tree-id]')).toHaveCount(2);
+    await root.focus();
+    await page.keyboard.press('ArrowRight');
+    await expect(root).toHaveAttribute('aria-expanded', 'true');
+    await expect(control.locator('[data-tree-id]')).toHaveCount(5);
+    await page.keyboard.press('ArrowRight');
+    const components = control.locator('[data-tree-id="components"]');
+    await expect(components).toBeFocused();
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowRight');
+    const buttons = control.locator('[data-tree-id="buttons"]');
+    await expect(buttons).toBeFocused();
+    await expect(buttons).toHaveAttribute('aria-level', '3');
+    await expect(buttons).toHaveAttribute('aria-selected', 'false');
+    await page.keyboard.press('Space');
+    await expect(buttons).toHaveAttribute('aria-selected', 'true');
+    await expect(page.getByText('Auswahl: buttons')).toBeVisible();
+    await page.keyboard.press('ArrowLeft');
+    await expect(components).toBeFocused();
+    await page.keyboard.press('ArrowLeft');
+    await expect(components).toHaveAttribute('aria-expanded', 'false');
+    await page.keyboard.press('ArrowDown');
+    await expect(control.locator('[data-tree-id="tokens"]')).toBeFocused();
+    await page.keyboard.press('ArrowDown');
+    await expect(control.locator('[data-tree-id="documentation"]')).toBeFocused();
+    await page.keyboard.press('Home');
+    await expect(root).toBeFocused();
+    await root.getByRole('button', { name: 'Designsystem einklappen' }).click();
+    await expect(control.locator('[data-tree-id]')).toHaveCount(2);
+    await control.locator('[data-tree-id="documentation"]').click();
+    await expect(page.getByText('Auswahl: documentation')).toBeVisible();
+    await page.goto(`/iframe.html?id=components-${kind}--disabled&viewMode=story`);
+    await expect(page.locator(`ui-${kind} [data-tree-id][tabindex="0"]`)).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Designsystem einklappen' })).toBeDisabled();
+  });
+}
+
+test('tree table exposes column headings and keeps data aligned at narrow widths and in Dark Mode', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto('/iframe.html?id=components-tree-table--default&viewMode=story');
+  const table = page.getByRole('treegrid', { name: 'Projekte und Zuständigkeiten' });
+  await expect(table).toBeVisible();
+  await expect(table.getByRole('columnheader')).toHaveText(['Name', 'Verantwortlich', 'Status']);
+  const buttons = table.locator('[data-tree-id="buttons"]');
+  await expect(buttons.getByRole('gridcell')).toHaveText(['Buttons', 'Lea', 'Fertig']);
+  const before = await table.evaluate((el) => getComputedStyle(el).backgroundColor);
+  await page.evaluate(() => {
+    document.body.classList.remove('ui-light');
+    document.body.classList.add('ui-dark');
+  });
+  await expect
+    .poll(() => table.evaluate((el) => getComputedStyle(el).backgroundColor))
+    .not.toBe(before);
+  await expect(table.locator('[data-tree-id="archive"]')).toHaveAttribute('aria-disabled', 'true');
+  await table.locator('[data-tree-id="documentation"]').click();
+  await expect(table.locator('[data-tree-id="documentation"]')).toHaveAttribute(
+    'aria-selected',
+    'true',
+  );
 });
 
 test('architecture guide renders its nine chapters with compiled source examples', async ({

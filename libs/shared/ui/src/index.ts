@@ -6,3 +6,6 @@ export { Chip } from './lib/chip';
 export { Dropdown, OptionButton } from './lib/menu';
 export type { UiOption } from './lib/option';
 export { Card } from './lib/card';
+export { Tree } from './lib/tree';
+export { TreeTable } from './lib/tree-table';
+export type { UiTreeNode, UiTreeColumn } from './lib/tree-state';

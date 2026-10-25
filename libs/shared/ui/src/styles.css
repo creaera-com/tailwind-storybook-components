@@ -320,6 +320,125 @@
     outline: 2px solid var(--ui-card-border);
     outline-offset: 3px;
   }
+  .ui-tree,
+  .ui-tree-table {
+    width: 100%;
+    color: var(--ui-font-default);
+    background: var(--ui-background-secondary);
+    font-size: var(--ui-font-size);
+  }
+  .ui-tree {
+    padding: 0.375rem;
+    border: 1px solid var(--ui-interaction-divider);
+    border-radius: var(--ui-radius);
+  }
+  .ui-tree-row,
+  .ui-tree-table-name {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  .ui-tree-row {
+    min-height: var(--ui-button-height);
+    padding-inline: calc(var(--ui-tree-level) * 1.25rem) 0.5rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+  }
+  .ui-tree-label {
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  .ui-tree-toggle,
+  .ui-tree-spacer {
+    width: 2rem;
+    height: 2rem;
+    flex: none;
+  }
+  .ui-tree-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 0.375rem;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+  .ui-tree-toggle svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  .ui-tree-arrow-expanded {
+    transform: rotate(90deg);
+  }
+  .ui-tree-row:hover:not([aria-disabled='true']),
+  .ui-tree-table-row:hover:not([aria-disabled='true']) {
+    background: var(--ui-background-primary);
+  }
+  .ui-tree-row[aria-selected='true'],
+  .ui-tree-table-row[aria-selected='true'] {
+    background: var(--ui-interaction-primary);
+    color: var(--ui-font-active);
+  }
+  .ui-tree-row[aria-selected='true']:hover:not([aria-disabled='true']),
+  .ui-tree-table-row[aria-selected='true']:hover:not([aria-disabled='true']) {
+    background: var(--ui-interaction-hover);
+  }
+  .ui-tree-row:focus-visible,
+  .ui-tree-table-row:focus-visible {
+    outline: 2px solid var(--ui-interaction-primary);
+    outline-offset: -2px;
+  }
+  .ui-tree-row[aria-selected='true']:focus-visible,
+  .ui-tree-table-row[aria-selected='true']:focus-visible {
+    outline-color: white;
+  }
+  .ui-tree-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+  .ui-tree-row[aria-disabled='true'],
+  .ui-tree-table-row[aria-disabled='true'] {
+    color: var(--ui-interaction-disabled);
+    cursor: not-allowed;
+  }
+  .ui-tree-toggle:disabled {
+    cursor: not-allowed;
+  }
+  .ui-tree-empty {
+    padding: var(--ui-padding);
+    color: var(--ui-font-default);
+  }
+  .ui-tree-table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--ui-interaction-divider);
+    border-radius: var(--ui-radius);
+  }
+  .ui-tree-table {
+    border-collapse: collapse;
+    text-align: start;
+  }
+  .ui-tree-table th,
+  .ui-tree-table td {
+    padding: 0.5rem var(--ui-padding);
+    border-bottom: 1px solid var(--ui-interaction-divider);
+    text-align: start;
+  }
+  .ui-tree-table th {
+    font-weight: 600;
+    background: var(--ui-background-primary);
+    white-space: nowrap;
+  }
+  .ui-tree-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .ui-tree-table-name {
+    min-height: calc(var(--ui-button-height) - 1rem);
+    padding-inline-start: calc(var(--ui-tree-level) * 1.25rem);
+  }
+  .ui-tree-table-row {
+    cursor: pointer;
+  }
   .ui-menu-anchor {
     position: relative;
     display: inline-block;

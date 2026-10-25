@@ -113,6 +113,13 @@ Formulare sind für eine spätere Phase vorgesehen. Cards sind inzwischen freige
   übereinander gestapelte Cards aus.
 - Card-Flächen sind weiß; die Border ist primär oder optional sekundär.
 
+## Ergänzungen: Tree und Tree Table
+
+- Eigenständige Komponenten für hierarchische Daten und eine hierarchische Tabelle.
+- Gemeinsames minimales Datenmodell, Einfachauswahl und steuerbare offene Knoten.
+- Zugängliche Tastaturbedienung; Themes und Größen folgen der zentralen Konfiguration.
+- Details und getroffene Startannahmen sind in der Storybook-Anwenderdoku beschrieben.
+
 ## Architektur-Dokumentation
 
 - Unter Storybook/Architektur liegt der mehrseitige Leitfaden für konsumierende Anwendungen.
