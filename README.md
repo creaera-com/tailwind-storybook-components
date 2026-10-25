@@ -307,3 +307,8 @@ auf dem iPad anschließend in Dateien oder Apple Bücher speichern.
 
 Der Export ist eine Momentaufnahme vom 25. Oktober 2026 (Quellstand `ce81ebc`),
 keine automatisch aktualisierte Ausgabe. Interaktive Stories bleiben in Storybook.
+
+Für den schnellen Einstieg gibt es außerdem den achtseitigen
+[Kickstart als PDF](docs/creaera-ui-kickstart.pdf) mit Einrichtung, Komponenten,
+Formularen, Themes und den wichtigsten Entwicklungsbefehlen. Die bearbeitbare
+Textfassung liegt unter [docs/kickstart.md](docs/kickstart.md).
