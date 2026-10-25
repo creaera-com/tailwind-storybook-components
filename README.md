@@ -210,3 +210,19 @@ Storybook enthält Text-, E-Mail-, Passwort-, Zahlen- und Datumsfelder, Textarea
 Fehler-, Disabled- und Readonly-Zustände sowie ein vollständiges Formularbeispiel.
 Die Anleitung steht unter **Anwenderdoku → Formularfelder**. Labelgröße und
 Farben werden zentral über `theme.css` konfiguriert.
+
+## Autocomplete
+
+`Autocomplete` ergänzt die Formularfelder um Textvorschläge mit lokaler Filterung.
+
+```html
+<ui-autocomplete label="Stadt" [options]="cities" [(value)]="city" placeholder="Stadt suchen" />
+```
+
+`Autocomplete` aus `@creaera/ui` importieren. `cities` ist ein `readonly string[]`,
+`city` ein String. `label` und `options` sind erforderlich; `placeholder`, `error`
+und `disabled` optional. Angular Forms (`formControl`, `formControlName`, `ngModel`)
+kann alternativ zum Value-Binding verwendet werden. Freier Text ist erlaubt;
+fachliche Validatoren definiert die Anwendung. Pfeiltasten, Home/End, Enter,
+Escape und Tab bedienen die Vorschlagsliste; der Fokus bleibt im Eingabefeld.
+Die vollständige Anleitung steht unter **Anwenderdoku → Autocomplete**.

@@ -37,6 +37,7 @@ const preview: Preview = {
             'Responsive Größen',
             'Komponenten verwenden',
             'Formularfelder',
+            'Autocomplete',
             'API und Projektaufbau',
           ],
           'Foundations',
