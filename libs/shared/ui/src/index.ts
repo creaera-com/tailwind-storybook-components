@@ -8,3 +8,6 @@ export type { UiOption } from './lib/option';
 export { Card } from './lib/card';
 export { FormField, Input } from './lib/form-field';
 export { Autocomplete } from './lib/autocomplete';
+export { Tree } from './lib/tree';
+export { TreeTable } from './lib/tree-table';
+export type { UiTreeNode, UiTreeColumn } from './lib/tree-state';

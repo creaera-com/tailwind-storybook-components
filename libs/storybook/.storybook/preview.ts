@@ -38,6 +38,7 @@ const preview: Preview = {
             'Komponenten verwenden',
             'Formularfelder',
             'Autocomplete',
+            'Trees',
             'API und Projektaufbau',
           ],
           'Foundations',

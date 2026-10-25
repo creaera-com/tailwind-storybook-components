@@ -226,3 +226,50 @@ kann alternativ zum Value-Binding verwendet werden. Freier Text ist erlaubt;
 fachliche Validatoren definiert die Anwendung. Pfeiltasten, Home/End, Enter,
 Escape und Tab bedienen die Vorschlagsliste; der Fokus bleibt im Eingabefeld.
 Die vollständige Anleitung steht unter **Anwenderdoku → Autocomplete**.
+
+## Tree und Tree Table
+
+`Tree` (`<ui-tree>`) und `TreeTable` (`<ui-tree-table>`) verwenden dieselbe kleine
+API: `nodes`, `label`, `[(expanded)]` als ID-Array, `[(selected)]` als einzelne ID
+oder null und `disabled`. Die Tree Table erhält zusätzlich `columns`; ihre erste
+Spalte „Name“ zeigt immer die Hierarchie. Zusätzliche Spalten lesen Werte aus
+`node.data[column.key]` und zeigen bei fehlenden Werten „—“ an.
+
+```ts
+import type { UiTreeNode, UiTreeColumn } from '@creaera/ui';
+
+const nodes: UiTreeNode[] = [
+  {
+    id: 'project',
+    label: 'Projekt',
+    children: [{ id: 'buttons', label: 'Buttons', data: { status: 'Fertig' } }],
+  },
+];
+const columns: UiTreeColumn[] = [{ key: 'status', label: 'Status' }];
+```
+
+```html
+<ui-tree label="Projektstruktur" [nodes]="nodes" [(expanded)]="openIds" [(selected)]="selectedId" />
+<ui-tree-table
+  label="Projektübersicht"
+  [nodes]="nodes"
+  [columns]="columns"
+  [(expanded)]="openIds"
+  [(selected)]="selectedId"
+/>
+```
+
+Die Daten und Zustandsfelder gehören in die konsumierende Angular-Komponente;
+`Tree` bzw. `TreeTable` in deren `imports` aufnehmen. Initial z. B.
+`openIds: readonly string[] = ['project']` und `selectedId: string | null = null`.
+IDs müssen im gesamten Baum eindeutig sein; Spaltenschlüssel innerhalb einer
+Tree Table ebenfalls. Kinder werden über `children` angegeben. `disabled` am
+Knoten sperrt ihn und seine Nachfahren. Die Pfeiltasten steuern den Fokus sowie
+das Auf-/Zuklappen; Enter oder Leertaste wählen aus. Die Auswahl folgt nicht
+automatisch dem Fokus. Ein Klick auf einen Pfeil ändert nur die Aufklappzustände.
+Home/End und Navigation über Anfangsbuchstaben sind unterstützt. Ausgeblendete
+Knoten bleiben in der Datenquelle und behalten ihren Auswahl-/Aufklappzustand.
+
+Tree hat ARIA-Tree-Semantik, Tree Table eine zeilenfokussierte Treegrid-Semantik.
+Zellen sind rein lesend; kein Forms-Adapter ist nötig. Weitere Beispiele und die
+genaue Tastaturbelegung stehen in Storybook unter **Anwenderdoku → Trees**.

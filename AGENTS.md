@@ -126,3 +126,10 @@ Cards und Formularfelder sind inzwischen freigegeben.
 - Labels, Border, Fehlerzustände, Themes und Größen wie bei den Formularfeldern.
 - Kleine API mit Textvorschlägen und Unterstützung für Angular Forms.
 - Startannahme: Freier Text ist zulässig; fachliche Einschränkungen über Validatoren.
+
+## Ergänzungen: Tree und Tree Table
+
+- Eigenständige Komponenten für hierarchische Daten und eine hierarchische Tabelle.
+- Gemeinsames minimales Datenmodell, Einfachauswahl und steuerbare offene Knoten.
+- Zugängliche Tastaturbedienung; Themes und Größen folgen der zentralen Konfiguration.
+- Details und getroffene Startannahmen sind in der Storybook-Anwenderdoku beschrieben.
