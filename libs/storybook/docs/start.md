@@ -114,4 +114,4 @@ Größenklasse aktiv sein. Beide Einstellungen sind voneinander unabhängig.
 
 Für die Browsertests einmalig `npx playwright install chromium` ausführen oder
 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` auf einen vorhandenen Chromium setzen.
-Cards stehen als normale und ausklappbare Variante bereit. Formulare sind für eine spätere Erweiterung vorgesehen.
+Cards stehen als normale und ausklappbare Variante bereit. Formularfelder und ein Angular-Forms-Beispiel stehen ebenfalls bereit.
