@@ -133,3 +133,11 @@ Cards und Formularfelder sind inzwischen freigegeben.
 - Gemeinsames minimales Datenmodell, Einfachauswahl und steuerbare offene Knoten.
 - Zugängliche Tastaturbedienung; Themes und Größen folgen der zentralen Konfiguration.
 - Details und getroffene Startannahmen sind in der Storybook-Anwenderdoku beschrieben.
+
+## Architektur-Dokumentation
+
+- Unter Storybook/Architektur liegt der mehrseitige Leitfaden für konsumierende Anwendungen.
+- Referenzcode liegt in `libs/storybook/examples/architecture`, getrennt von der UI-Bibliothek.
+- Geänderte Codeblöcke mit `npm run docs:architecture:sync` aus den Quellen aktualisieren.
+- Synchronität mit `npm run docs:architecture:check` und Verhalten mit `npm run test:architecture` prüfen.
+- Beschriebene Zielstrukturen und API-Verträge nicht als bereits implementiertes Backend darstellen.

@@ -445,3 +445,52 @@ test('tree table exposes column headings and keeps data aligned at narrow widths
     'true',
   );
 });
+
+test('architecture guide renders its nine chapters with compiled source examples', async ({
+  page,
+  request,
+}) => {
+  const errors: string[] = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  const index = await (await request.get('/index.json')).json();
+  const chapters = [
+    ['Architektur/Start', 'Moderne Angular-Architektur', '22.0.1'],
+    ['Architektur/Module und Nx', 'Module und Nx', 'loadComponent'],
+    [
+      'Architektur/Komponenten anlegen und CLI',
+      'Komponenten anlegen und wichtige CLI-Befehle',
+      '--dry-run',
+    ],
+    ['Architektur/Komponenten und APIs', 'Komponenten und ihre APIs', 'publishRequested'],
+    ['Architektur/State und Signal Store', 'State und NgRx Signal Store', 'setAllEntities'],
+    ['Architektur/HTTP und CRUD', 'HTTP und CRUD-APIs', 'Idempotency-Key'],
+    ['Architektur/Aktionen und Nebenläufigkeit', 'Aktionen und Nebenläufigkeit', '202 Accepted'],
+    ['Architektur/Server-Suche', 'Server-Suche und Autocomplete', 'Debounce'],
+    [
+      'Architektur/Tests und Weiterentwicklung',
+      'Tests und schrittweise Weiterentwicklung',
+      'test:architecture',
+    ],
+  ];
+  for (const [title, heading, content] of chapters) {
+    const entry = Object.values(index.entries).find(
+      (entry: any) => entry.type === 'docs' && entry.title === title,
+    ) as { id: string } | undefined;
+    expect(entry, title).toBeDefined();
+    await page.goto(`/?path=/docs/${entry!.id}`);
+    const preview = page.frameLocator('#storybook-preview-iframe');
+    await expect(preview.getByRole('heading', { name: heading })).toBeVisible();
+    await expect(preview.locator('.sbdocs-content')).toContainText(content);
+    await expect(preview.locator('.sbdocs-content pre').first()).toBeVisible();
+    await expect(preview.locator('.sb-errordisplay')).not.toBeVisible();
+    if (title === 'Architektur/State und Signal Store') {
+      await expect(preview.locator('.sbdocs-content pre.prismjs')).toHaveCount(2);
+      await expect(preview.locator('.sbdocs-content')).toContainText('completedCreates');
+    }
+    if (title === 'Architektur/HTTP und CRUD') {
+      await expect(preview.getByRole('table').first()).toContainText('PATCH');
+      await expect(preview.locator('.sbdocs-content')).toContainText('toUserError');
+    }
+  }
+  expect(errors).toEqual([]);
+});

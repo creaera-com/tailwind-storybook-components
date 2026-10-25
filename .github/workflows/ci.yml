@@ -14,5 +14,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test
+      - run: npm run docs:architecture:check
+      - run: npm run test:architecture
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e

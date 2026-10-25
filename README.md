@@ -273,3 +273,27 @@ Knoten bleiben in der Datenquelle und behalten ihren Auswahl-/Aufklappzustand.
 Tree hat ARIA-Tree-Semantik, Tree Table eine zeilenfokussierte Treegrid-Semantik.
 Zellen sind rein lesend; kein Forms-Adapter ist nötig. Weitere Beispiele und die
 genaue Tastaturbelegung stehen in Storybook unter **Anwenderdoku → Trees**.
+
+## Architekturleitfaden
+
+Storybook enthält unter **Architektur** neun Kapitel zu modularen Angular-/Nx-
+Anwendungen, Komponentengrenzen, State-Besitz, NgRx Signal Store, CRUD- und
+Aktions-APIs, Server-Suche und Tests. Ein zusammenhängendes Projektverwaltungs-
+Beispiel veranschaulicht die Entscheidungen.
+
+Die kompilierten Referenzdateien liegen unter
+`libs/storybook/examples/architecture`. Die vorgeschlagenen Fach-Libraries und
+Backend-Endpunkte sind ein Zielbild für konsumierende Anwendungen; dieses
+Repository enthält weiterhin die UI-Bibliothek und Storybook.
+
+```sh
+npm run docs:architecture:sync
+npm run docs:architecture:check
+npm run test:architecture
+```
+
+Codeblöcke in den Kapiteln werden aus den echten Beispieldateien übernommen.
+Die separaten Tests verwenden Angulars HTTP-Testbackend und prüfen auch
+Stornierung, Nebenläufigkeit und Injector-Lifecycle. NgRx 22.0.1 und der Router
+sind Entwicklungsabhängigkeiten für diese Beispiele. Das veröffentlichbare
+UI-Paket erhält keine NgRx-Laufzeitabhängigkeit.

@@ -34,6 +34,15 @@
         "index": "libs/storybook/index.html"
       },
       "outputs": ["{workspaceRoot}/dist/storybook-host"]
+    },
+    "test-examples": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "buildTarget": "storybook:build",
+        "tsConfig": "libs/storybook/tsconfig.examples.json",
+        "watch": false,
+        "include": ["examples/architecture/**/*.spec.ts"]
+      }
     }
   }
 }
