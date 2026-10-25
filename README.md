@@ -297,3 +297,23 @@ Die separaten Tests verwenden Angulars HTTP-Testbackend und prüfen auch
 Stornierung, Nebenläufigkeit und Injector-Lifecycle. NgRx 22.0.1 und der Router
 sind Entwicklungsabhängigkeiten für diese Beispiele. Das veröffentlichbare
 UI-Paket erhält keine NgRx-Laufzeitabhängigkeit.
+
+## Offline-Handbuch als PDF
+
+Das [PDF-Handbuch](docs/creaera-ui-handbuch.pdf) enthält die Anwender- und
+Architektur-Dokumentation inklusive Codebeispielen und verlinktem Inhaltsverzeichnis.
+In GitHub die PDF-Datei öffnen und über **Download raw file** herunterladen;
+auf dem iPad anschließend in Dateien oder Apple Bücher speichern.
+
+Der Export ist eine Momentaufnahme vom 25. Oktober 2026 (Quellstand `ce81ebc`),
+keine automatisch aktualisierte Ausgabe. Interaktive Stories bleiben in Storybook.
+
+Für den schnellen Einstieg gibt es außerdem den achtseitigen
+[Kickstart als PDF](docs/creaera-ui-kickstart.pdf) mit Einrichtung, Komponenten,
+Formularen, Themes und den wichtigsten Entwicklungsbefehlen. Die bearbeitbare
+Textfassung liegt unter [docs/kickstart.md](docs/kickstart.md).
+
+Der zehnseitige [API-Kickstart als PDF](docs/creaera-api-kickstart.pdf) erklärt
+CRUD-Services, NgRx Signal Stores, Zuweisungen und Hintergrundjobs mit Polling.
+Die bearbeitbare Fassung liegt unter [docs/api-kickstart.md](docs/api-kickstart.md).
+Die beschriebenen Endpunkte sind Beispielverträge, kein implementiertes Backend.
