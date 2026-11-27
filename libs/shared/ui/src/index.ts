@@ -11,3 +11,5 @@ export { Autocomplete } from './lib/autocomplete';
 export { Tree } from './lib/tree';
 export { TreeTable } from './lib/tree-table';
 export type { UiTreeNode, UiTreeColumn } from './lib/tree-state';
+export { RadialMenu } from './lib/radial-menu';
+export type { RadialMenuItem } from './lib/radial-menu';
