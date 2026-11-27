@@ -1,5 +1,5 @@
 <div
-  class="radial-menu"
+  class="radial-menu----root"
   role="group"
   aria-label="Radiales Menü"
   [style.--inner-step]="innerStep() + 'deg'"
@@ -7,32 +7,39 @@
   [style.--active-index]="activeIndex()"
   [style.--outer-count]="subItems().length"
 >
-  <button class="close" type="button" aria-label="Menü schließen" (click)="closed.emit()">×</button>
+  <button
+    class="radial-menu----close"
+    type="button"
+    aria-label="Menü schließen"
+    (click)="closed.emit()"
+  >
+    ×
+  </button>
   @for (item of items(); track item.id; let index = $index) {
   <button
-    class="segment inner"
+    class="radial-menu----segment radial-menu----inner"
     type="button"
     [style.--index]="index"
     [attr.aria-expanded]="index === activeIndex() && subItems().length ? true : null"
     (click)="itemSelected.emit(item)"
   >
-    <span class="fill"></span>
-    <span class="label">
+    <span class="radial-menu----fill"></span>
+    <span class="radial-menu----label">
       @if (item.icon) { <span aria-hidden="true">{{ item.icon }}</span> }
-      <span class="text">{{ item.label }}</span>
+      <span class="radial-menu----text">{{ item.label }}</span>
     </span>
   </button>
   } @if (activeIndex() >= 0) { @for (item of subItems(); track item.id; let index = $index) {
   <button
-    class="segment outer"
+    class="radial-menu----segment radial-menu----outer"
     type="button"
     [style.--index]="index"
     (click)="subItemSelected.emit(item)"
   >
-    <span class="fill"></span>
-    <span class="label">
+    <span class="radial-menu----fill"></span>
+    <span class="radial-menu----label">
       @if (item.icon) { <span aria-hidden="true">{{ item.icon }}</span> }
-      <span class="text">{{ item.label }}</span>
+      <span class="radial-menu----text">{{ item.label }}</span>
     </span>
   </button>
   } }
