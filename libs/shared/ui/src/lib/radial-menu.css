@@ -1,0 +1,132 @@
+:host {
+  display: block;
+}
+
+.radial-menu {
+  position: relative;
+  inline-size: min(100%, calc(var(--ui-button-height) * 10));
+  aspect-ratio: 1;
+  container-type: inline-size;
+}
+
+.close,
+.segment {
+  cursor: pointer;
+  font-size: var(--ui-font-size);
+}
+
+.close {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  inline-size: 20cqi;
+  aspect-ratio: 1;
+  border: 1px solid var(--ui-interaction-primary);
+  border-radius: 50%;
+  background: var(--ui-background-secondary);
+  color: var(--ui-font-default);
+  font-size: 1.5em;
+}
+
+.close:hover,
+.close:focus-visible {
+  background: var(--ui-interaction-hover);
+  color: var(--ui-font-active);
+}
+
+.inner {
+  --inner: 11cqi;
+  --outer: 30cqi;
+  --step: var(--inner-step);
+  --angle: calc(var(--index) * var(--step));
+}
+
+.outer {
+  --inner: 31cqi;
+  --outer: 50cqi;
+  --step: var(--outer-step);
+  --angle: calc(
+    var(--active-index) * var(--inner-step) + (var(--index) - (var(--outer-count) - 1) / 2) *
+      var(--step)
+  );
+}
+
+.segment,
+.fill {
+  position: absolute;
+  inset: 0;
+  --half: calc(var(--step) / 2);
+  --outer-edge: calc(var(--outer) - var(--inset));
+  --inner-edge: calc(var(--inner) + var(--inset));
+  --outer-angle: calc(var(--half) - atan2(var(--inset), var(--outer)));
+  --inner-angle: calc(var(--half) - atan2(var(--inset), var(--inner)));
+  --outer-x: calc(sin(var(--outer-angle)) * var(--outer-edge));
+  --outer-y: calc(cos(var(--outer-angle)) * var(--outer-edge));
+  --inner-x: calc(sin(var(--inner-angle)) * var(--inner-edge));
+  --inner-y: calc(cos(var(--inner-angle)) * var(--inner-edge));
+
+  /* Each arc passes through the top of the ring, including on wide segments. */
+  clip-path: shape(
+    from calc(50% - var(--outer-x)) calc(50% - var(--outer-y)),
+    arc to 50% calc(50% - var(--outer-edge)) of var(--outer-edge) cw,
+    arc to calc(50% + var(--outer-x)) calc(50% - var(--outer-y)) of var(--outer-edge) cw,
+    line to calc(50% + var(--inner-x)) calc(50% - var(--inner-y)),
+    arc to 50% calc(50% - var(--inner-edge)) of var(--inner-edge) ccw,
+    arc to calc(50% - var(--inner-x)) calc(50% - var(--inner-y)) of var(--inner-edge) ccw,
+    close
+  );
+}
+
+.segment {
+  --inset: 0px;
+  --surface: var(--ui-interaction-primary);
+  padding: 0;
+  border: 0;
+  rotate: var(--angle);
+  background: var(--ui-background-secondary);
+  color: var(--ui-font-active);
+}
+
+.outer {
+  --surface: var(--ui-interaction-secondary);
+}
+
+.segment:hover,
+.segment[aria-expanded='true'] {
+  --surface: var(--ui-interaction-hover);
+}
+
+.outer:hover {
+  --surface: var(--ui-interaction-hover-secondary);
+}
+
+.segment:focus-visible {
+  --surface: var(--ui-interaction-pressed-primary);
+  background: currentColor;
+}
+
+.fill {
+  --inset: 1px;
+  background: var(--surface);
+}
+
+.label {
+  position: absolute;
+  inset: calc(50% - (var(--inner) + var(--outer)) / 2) auto auto 50%;
+  translate: -50% -50%;
+  rotate: calc(-1 * var(--angle));
+  display: grid;
+  justify-items: center;
+  inline-size: min(18cqi, calc(sin(min(90deg, var(--half))) * (var(--inner) + var(--outer)) - 4px));
+  line-height: 1.15;
+  text-align: center;
+}
+
+.text {
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
