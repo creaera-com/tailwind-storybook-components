@@ -2,20 +2,20 @@
   display: block;
 }
 
-.radial-menu----root {
+.radial-menu-root {
   position: relative;
   inline-size: min(100%, calc(var(--ui-button-height) * 10));
   aspect-ratio: 1;
   container-type: inline-size;
 }
 
-.radial-menu----close,
-.radial-menu----segment {
+.radial-menu-close,
+.radial-menu-segment {
   cursor: pointer;
   font-size: var(--ui-font-size);
 }
 
-.radial-menu----close {
+.radial-menu-close {
   position: absolute;
   inset: 50% auto auto 50%;
   translate: -50% -50%;
@@ -30,20 +30,20 @@
   font-size: 1.5em;
 }
 
-.radial-menu----close:hover,
-.radial-menu----close:focus-visible {
+.radial-menu-close:hover,
+.radial-menu-close:focus-visible {
   background: var(--ui-interaction-hover);
   color: var(--ui-font-active);
 }
 
-.radial-menu----inner {
+.radial-menu-inner {
   --inner: 11cqi;
   --outer: 30cqi;
   --step: var(--inner-step);
   --angle: calc(var(--index) * var(--step));
 }
 
-.radial-menu----outer {
+.radial-menu-outer {
   --inner: 31cqi;
   --outer: 50cqi;
   --step: var(--outer-step);
@@ -53,8 +53,8 @@
   );
 }
 
-.radial-menu----segment,
-.radial-menu----fill {
+.radial-menu-segment,
+.radial-menu-fill {
   position: absolute;
   inset: 0;
   --half: calc(var(--step) / 2);
@@ -79,7 +79,7 @@
   );
 }
 
-.radial-menu----segment {
+.radial-menu-segment {
   --inset: 0px;
   --surface: var(--ui-interaction-primary);
   padding: 0;
@@ -89,30 +89,30 @@
   color: var(--ui-font-active);
 }
 
-.radial-menu----outer {
+.radial-menu-outer {
   --surface: var(--ui-interaction-secondary);
 }
 
-.radial-menu----segment:hover,
-.radial-menu----segment[aria-expanded='true'] {
+.radial-menu-segment:hover,
+.radial-menu-segment[aria-expanded='true'] {
   --surface: var(--ui-interaction-hover);
 }
 
-.radial-menu----outer:hover {
+.radial-menu-outer:hover {
   --surface: var(--ui-interaction-hover-secondary);
 }
 
-.radial-menu----segment:focus-visible {
+.radial-menu-segment:focus-visible {
   --surface: var(--ui-interaction-pressed-primary);
   background: currentColor;
 }
 
-.radial-menu----fill {
+.radial-menu-fill {
   --inset: 1px;
   background: var(--surface);
 }
 
-.radial-menu----label {
+.radial-menu-label {
   position: absolute;
   inset: calc(50% - (var(--inner) + var(--outer)) / 2) auto auto 50%;
   translate: -50% -50%;
@@ -124,7 +124,7 @@
   text-align: center;
 }
 
-.radial-menu----text {
+.radial-menu-text {
   max-inline-size: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
